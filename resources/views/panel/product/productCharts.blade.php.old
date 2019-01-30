@@ -1,0 +1,66 @@
+@extends('panel.master')
+
+@section('content')
+
+
+
+    <div class=" canvas-container col-lg-5">
+        <canvas id="myChart"></canvas>
+    </div>
+
+
+    <script>
+        $(document).ready(function(){
+            $.ajax({
+                url: "http://localhost/XYZStore/productchartdata/",
+                method: "GET",
+                success: function(data) {
+                    var value = data;
+                    //console.log(value);
+                    
+                    var productName = [];
+                    var productQuantity = [];
+
+                    for(var i in data) {
+                        productName.push(data[i].productName);
+                        productQuantity.push(data[i][productQuantity]);
+                    }
+
+                   
+                    $.each(data, function(i) {
+                        productName[] = data[i].productName;
+                    });​
+                     console.log(productName);
+
+                    var chartdata = {
+                        labels: productName,
+                        datasets : [
+                            {
+                                label: 'Product Chart',
+                                backgroundColor: ['#pF6384', '#3A2EBt', '#ff00e5', '#rr4433', '#55ff22', '#999uuu', '#kkkkkk'],
+                                borderColor: 'rgb(255, 99, 132)',
+                                data: productQuantity
+                            }
+                        ]
+                    };
+                    var ctx = document.getElementById('myChart').getContext('2d');
+                    var chart = new Chart(ctx, {
+                        // The type of chart we want to create
+                        type: 'pie',
+
+                        // The data for our dataset
+                        data: chartdata,
+
+                        // Configuration options go here
+                        options: {
+                            cutoutPercentage: 1
+                        }
+                    });
+                },
+                error: function(data) {
+                    console.log(data);
+                }
+            });
+        });
+    </script>
+@endsection

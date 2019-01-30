@@ -1,0 +1,14 @@
+Video:
+https://www.youtube.com/watch?v=0bHy8O9GpFY&t=5939s
+
+video time: 2:03
+
+which is which method in categoryController.php
+
+
+$products = DB::table('products')
+            ->leftJoin('categories', 'products.productCategoryID', '=', 'categories.id')
+            ->leftJoin('brands', 'products.productBrandID', '=', 'brands.id')
+            ->join('sales', 'products.id', '=', 'sales.productID')
+            ->select('sales.purchaseQuantity', 'products.id', 'products.productName', 'products.productModel', 'products.productCategoryID', 'products.productBrandID', 'products.productQuantity', 'products.productPrice', 'products.productNotes', 'categories.categoryName', 'brands.brandName', DB::raw('sum(purchaseQuantity)'))
+            ->sum('purchaseQuantity');
