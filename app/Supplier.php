@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Suppiler extends Model
+class Supplier extends Model
 {
     //
 }

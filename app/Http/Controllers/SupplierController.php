@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Suppiler;
+use App\Supplier;
 use Illuminate\Http\Request;
 
-class SuppilerController extends Controller
+class SupplierController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class SuppilerController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Suppiler  $suppiler
+     * @param  \App\Supplier  $supplier
      * @return \Illuminate\Http\Response
      */
-    public function show(Suppiler $suppiler)
+    public function show(Supplier $supplier)
     {
         //
     }
@@ -52,10 +52,10 @@ class SuppilerController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Suppiler  $suppiler
+     * @param  \App\Supplier  $supplier
      * @return \Illuminate\Http\Response
      */
-    public function edit(Suppiler $suppiler)
+    public function edit(Supplier $supplier)
     {
         //
     }
@@ -64,10 +64,10 @@ class SuppilerController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Suppiler  $suppiler
+     * @param  \App\Supplier  $supplier
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Suppiler $suppiler)
+    public function update(Request $request, Supplier $supplier)
     {
         //
     }
@@ -75,10 +75,10 @@ class SuppilerController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Suppiler  $suppiler
+     * @param  \App\Supplier  $supplier
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Suppiler $suppiler)
+    public function destroy(Supplier $supplier)
     {
         //
     }
