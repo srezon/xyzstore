@@ -137,5 +137,6 @@ Route::get('/invoice/makeDelivered/{id}', 'InvoiceController@makeInvoiceDelivere
 
 
 //Supplier Routes
-Route::get('supplier/new', 'SupplierController@index');
+Route::get('supplier/new', 'SupplierController@create');
+Route::post('supplier/save', 'SupplierController@store');
 

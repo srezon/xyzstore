@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Brand;
+use App\Category;
 use App\Supplier;
 use Illuminate\Http\Request;
 
@@ -22,9 +24,10 @@ class SupplierController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $brands = Brand::all();
+        return view('panel.supplier.newSupplier')->with('brands', $brands)->with('addMsg', 'Add new Supplier:');
     }
 
     /**
@@ -35,7 +38,23 @@ class SupplierController extends Controller
      */
     public function store(Request $request)
     {
-        //
+//        return $request->all();
+        $this->validate($request, [
+            'supplierName' => 'required',
+            'supplierPhone' => 'required',
+            'brandID' => 'required',
+            'supplierAddress' => 'required',
+        ]);
+        $newSupplier = new Supplier();
+        $newSupplier->supplierName = $request->supplierName;
+        $newSupplier->supplierPhone = $request->supplierPhone;
+        $newSupplier->supplierEmail = $request->supplierEmail;
+        $newSupplier->brand_id = $request->brandID;
+        $newSupplier->supplierAddress = $request->supplierAddress;
+        $newSupplier->save();
+
+        return 'SUpplier Added';
+
     }
 
     /**
