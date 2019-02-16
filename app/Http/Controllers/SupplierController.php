@@ -16,7 +16,9 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        //
+        $suppliers = Supplier::with('brand')->get();
+        return view('panel.supplier.viewSuppliers')->with('suppliers', $suppliers);
+
     }
 
     /**
@@ -26,7 +28,7 @@ class SupplierController extends Controller
      */
     public function create(Request $request)
     {
-        $brands = Brand::all();
+         $brands = Brand::doesntHave('supplier')->get();
         return view('panel.supplier.newSupplier')->with('brands', $brands)->with('addMsg', 'Add new Supplier:');
     }
 
@@ -38,13 +40,13 @@ class SupplierController extends Controller
      */
     public function store(Request $request)
     {
-//        return $request->all();
         $this->validate($request, [
             'supplierName' => 'required',
             'supplierPhone' => 'required',
             'brandID' => 'required',
             'supplierAddress' => 'required',
         ]);
+
         $newSupplier = new Supplier();
         $newSupplier->supplierName = $request->supplierName;
         $newSupplier->supplierPhone = $request->supplierPhone;
@@ -53,7 +55,8 @@ class SupplierController extends Controller
         $newSupplier->supplierAddress = $request->supplierAddress;
         $newSupplier->save();
 
-        return 'SUpplier Added';
+        return redirect()->back()->with('successMsg', "Supplier has been updated!")->with('suppliers', Supplier::all());
+
 
     }
 
@@ -74,9 +77,17 @@ class SupplierController extends Controller
      * @param  \App\Supplier  $supplier
      * @return \Illuminate\Http\Response
      */
-    public function edit(Supplier $supplier)
+    public function edit($id)
     {
-        //
+        $supplier = Supplier::find($id);
+        $brand = Brand::find($supplier->brand_id);
+
+        $editMsg = "Edit the Supplier:";
+
+        return view('panel.supplier.editSupplier')
+            ->with('brand', $brand)
+            ->with('supplier', $supplier)
+            ->with('editMsg', $editMsg);
     }
 
     /**
@@ -86,9 +97,14 @@ class SupplierController extends Controller
      * @param  \App\Supplier  $supplier
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Supplier $supplier)
+    public function update(Request $request, $id)
     {
-        //
+        $supplier = new Supplier();
+        $supplier->find($id)->fill($request->all())->save();
+        return $supplier->all();
+        return view('panel.supplier.viewSuppliers')->with('successMsg', "Supplier has been updated!")->with('suppliers', $supplier->all());
+
+
     }
 
     /**
