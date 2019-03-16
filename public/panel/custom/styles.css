@@ -21,3 +21,9 @@ nav.navbar.navbar-default.navbar-static-top {
     /*color: #f1f1f1 !important;*/
 /*}*/
 
+
+.subnav {
+    background-color: rgba(0, 0, 0, .05);
+    display: none;
+}
+.subnav .nav-item { padding-left: .5rem; }
