@@ -16,19 +16,19 @@ class ProductController extends Controller
 //        $categories = Category::where('publicationStatus', 1)->get();
         $categories = Category::all();
         $brands = Brand::all();
-        return view('panel.product.newProduct')
-            ->with('categories', $categories)
-            ->with('brands', $brands)
-            ->with('addMsg', 'Add new Product:');
+
+        return view('panel.product.newProduct')->with('categories', $categories)->with('brands', $brands)->with('addMsg', 'Add new Product:');
     }
 
     public function saveProduct(Request $request)
     {
+//        return $request->productName;
+//        return $request->all();
         //validation
         $this->validate($request, [
             'productName' => 'required',
             'productCategoryID' => 'required',
-            //'productBrand' => 'required',
+            'productBrandID' => 'required',
             'productQuantity' => 'required',
             'productSellingPrice' => 'required',
         ]);
@@ -102,8 +102,8 @@ class ProductController extends Controller
             ->leftJoin('categories', 'products.productCategoryID', '=', 'categories.id')
             ->leftJoin('brands', 'products.productBrandID', '=', 'brands.id')
             ->leftJoin('sales', 'products.id', '=', 'sales.productID')
-            ->select( 'products.id', 'products.productName', 'products.productModel', 'products.productCategoryID', 'products.productBrandID', 'products.productQuantity', 'products.productSellingPrice', 'products.productNotes', 'categories.categoryName', 'brands.brandName', DB::raw('IFNULL(SUM(sales.purchaseQuantity), 0) as productTotalSold'))
-            ->groupBy('products.id', 'products.productName', 'products.productModel', 'products.productCategoryID', 'products.productBrandID', 'products.productQuantity', 'products.productSellingPrice', 'products.productNotes', 'products.created_at', 'products.updated_at', 'categories.categoryName', 'brands.brandName' )
+            ->select('products.id', 'products.productName', 'products.productModel', 'products.productCategoryID', 'products.productBrandID', 'products.productQuantity', 'products.productSellingPrice', 'products.productNotes', 'categories.categoryName', 'brands.brandName', DB::raw('IFNULL(SUM(sales.purchaseQuantity), 0) as productTotalSold'))
+            ->groupBy('products.id', 'products.productName', 'products.productModel', 'products.productCategoryID', 'products.productBrandID', 'products.productQuantity', 'products.productSellingPrice', 'products.productNotes', 'products.created_at', 'products.updated_at', 'categories.categoryName', 'brands.brandName')
             ->get();
 
 

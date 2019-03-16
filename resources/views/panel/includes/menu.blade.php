@@ -22,6 +22,9 @@
                     <li>
                         <a href="{{url('/customer/new/')}}">Customer</a>
                     </li>
+                    <li>
+                        <a href="{{url('/supplier/new/')}}">Supplier</a>
+                    </li>
                 </ul>
                 <!-- /.nav-second-level -->
             </li>
@@ -43,6 +46,9 @@
                     </li>
                     <li>
                         <a href="{{url('/brands/')}}">Brands</a>
+                    </li>
+                    <li>
+                        <a href="{{url('/suppliers/')}}">Suppliers</a>
                     </li>
                     <li>
                         <a href="{{url('/customers/')}}">Customers</a>

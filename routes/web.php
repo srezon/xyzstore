@@ -135,3 +135,11 @@ Route::get('/invoices/', 'InvoiceController@viewInvoices');
 Route::get('/invoice/{id}', 'InvoiceController@viewInvoiceDetails');
 Route::get('/invoice/makeDelivered/{id}', 'InvoiceController@makeInvoiceDelivered');
 
+
+//Supplier Routes
+Route::get('supplier/new', 'SupplierController@create');
+Route::post('supplier/save/', 'SupplierController@store');
+Route::post('supplier/update/{id}', 'SupplierController@update');
+Route::get('suppliers', 'SupplierController@index');
+Route::get('/supplier/edit/{id}', 'SupplierController@edit');
+
