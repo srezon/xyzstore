@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use App\Brand;
 use App\Product;
@@ -36,6 +37,8 @@ class BrandController extends Controller
 
     public function editBrand($id)
     {
+
+
         $brandByID = Brand::where('id', $id)->first();
         return view('panel.brand.editBrand')
             ->with('brandByID', $brandByID)
@@ -50,6 +53,7 @@ class BrandController extends Controller
         $brandByID->save();
         return redirect('/brands/')->with('successMsg', 'Brand Updated Successfully!');
     }
+
     public function productsByBrand($id){
         $productBrand = Brand::where('id', $id)->first();
         $productsByBrand = Product::where('productBrandID', $id)
@@ -59,7 +63,6 @@ class BrandController extends Controller
 
         return view('panel.brand.productsByBrand')
             ->with('productsByBrand', $productsByBrand)
-            ->with('productBrand', $productBrand)
-            ;
+            ->with('productBrand', $productBrand);
     }
 }

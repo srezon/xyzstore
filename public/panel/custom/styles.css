@@ -1,9 +1,9 @@
 nav.navbar.navbar-default.navbar-static-top {
-    background-color: #20B2AA;
+    background-color: #0e1b12;
 }
 
 .navbar-default.sidebar {
-    background-color: #20B2AA;
+    background-color: #0e1b12;
 }
 
 /*a {
@@ -12,4 +12,25 @@ nav.navbar.navbar-default.navbar-static-top {
 
 .bg-mycolur {
     background-color: #20B2AA;
+}
+.navbar-default .navbar-brand {
+    color: #f1f1f1 !important;
+}
+
+/*.navbar-default a {*/
+    /*color: #f1f1f1 !important;*/
+/*}*/
+
+
+.subnav {
+    background-color: rgba(0, 0, 0, .05);
+    display: none;
+}
+.subnav .nav-item { padding-left: .5rem; }
+
+.sidebar .nav>li>a {
+    color: #333333;
+}
+.sidebar .nav>li>a i.fa {
+    margin-top: 10px;
 }
