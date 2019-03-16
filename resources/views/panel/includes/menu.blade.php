@@ -51,28 +51,6 @@
                 <!-- /.nav-second-level -->
             </li>
 
-            {{--<li>--}}
-            {{--<a href="#"><i class="glyphicon glyphicon-signal"></i> Reports<span class="fa arrow"></span></a>--}}
-            {{--<ul class="nav nav-second-level">--}}
-            {{--<li>--}}
-            {{--<a href="{{url('/productreports/')}}">Sale Report</a>--}}
-            {{--</li>--}}
-            {{--<li>--}}
-            {{--<a href="{{url('/salereports/')}}">Products</a>--}}
-            {{--</li>--}}
-            {{--<li>--}}
-            {{--<a href="{{url('/categoryreports')}}">Categories</a>--}}
-            {{--</li>--}}
-            {{--<li>--}}
-            {{--<a href="{{url('/brandreports')}}">Brands</a>--}}
-            {{--</li>--}}
-            {{--<li>--}}
-            {{--<a href="{{url('/customerreports')}}">Customers</a>--}}
-            {{--</li>--}}
-            {{--</ul>--}}
-            {{--<!-- /.nav-second-level -->--}}
-            {{--</li>--}}
-
 
         </ul>
     </div>
