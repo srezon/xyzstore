@@ -27,3 +27,10 @@ nav.navbar.navbar-default.navbar-static-top {
     display: none;
 }
 .subnav .nav-item { padding-left: .5rem; }
+
+.sidebar .nav>li>a {
+    color: #333333;
+}
+.sidebar .nav>li>a i.fa {
+    margin-top: 10px;
+}
