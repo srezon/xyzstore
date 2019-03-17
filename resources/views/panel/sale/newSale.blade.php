@@ -47,6 +47,9 @@
             </tbody>
         </table>
         <br>
+        <h3>@if (Session::has('stockOut'))
+            {{Session::get('stockOut')}}
+        @endif</h3>
         <h3 class="text text-success">Customer and Invoice Information</h3>
         <div class="row">
             <div class="col-lg-12">
@@ -57,7 +60,7 @@
                         <label class="col-sm-2 control-label">Invoice Code</label>
                         <div class="col-sm-10">
                             <select class="form-control" name="invoiceCode" required>
-                                <option>Select Invoice Code</option>
+                                <option value="">Select Invoice Code</option>
                                 @foreach($invoices as $invoice)
                                     <option value="{{ $invoice->invoiceCode }}">{{ $invoice->invoiceCode }}</option>
                                 @endforeach

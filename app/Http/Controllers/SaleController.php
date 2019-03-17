@@ -97,6 +97,11 @@ class SaleController extends Controller
             'invoiceCode' => 'required',
         ]);
 
+        $thisProduct = Product::find($request->productID);
+        if ($thisProduct->productQuantity >= 0) {
+            return redirect()->back()->withInput($request->all())->with('stockOut', 'This Product is out of stock');
+        }
+
 
         $isOldInvoice = DB::table('invoices')
             ->select('invoiceCode')
@@ -203,9 +208,9 @@ class SaleController extends Controller
         $totalProfit = $totalSaleCost[0]->totalBill - $totalCost[0]->totalCost;
 
         //finding profit percentage
-        if ($totalCost[0]->totalCost == 0){
+        if ($totalCost[0]->totalCost == 0) {
             $profitPercentage = 0;
-        }else{
+        } else {
             $profitPercentage = round(($totalProfit * 100) / $totalCost[0]->totalCost);
 
         }

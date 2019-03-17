@@ -1,11 +1,6 @@
 @extends('panel.master')
 
-
-
-
-
 @section('content')
-
     <hr/>
     <div class="row">
         <div class="col-lg-12">
@@ -34,7 +29,6 @@
                         <span class="text-danger">{{ $errors->has('phoneNumber') ? $errors->first('phoneNumber') : '' }}</span>
                     </div>
                 </div>
-                
                 <div class="form-group">
                     <label class="col-sm-2 control-label">Email Address</label>
                     <div class="col-sm-10">
@@ -59,5 +53,4 @@
             </div>
         </div>
     </div>
-
 @endsection

@@ -7,8 +7,7 @@ use App\Customer;
 use App\Product;
 use App\Sale;
 use App\Brand;
-use App\Providers;
-
+use App\Supplier;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,6 +24,7 @@ class PanelController extends Controller
             $saleCount = Sale::count();
             $brandCount = Brand::count();
             $customerCount = Customer::count();
+            $supplierCount = Supplier::count();
             //passing data with array method
 //            return view('panel.home.home', ['categoryCount'=>$categoryCount]);
             //passing data with with method
@@ -33,7 +33,9 @@ class PanelController extends Controller
                 ->with('productCount', $productCount)
                 ->with('saleCount', $saleCount)
                 ->with('brandCount', $brandCount)
-                ->with('customerCount', $customerCount);
+                ->with('customerCount', $customerCount)
+                ->with('supplierCount', $supplierCount)
+                ;
         }
 
 //        Sir handled it with middleware https://www.youtube.com/watch?v=0bHy8O9GpFY&t=5939s (16:0)

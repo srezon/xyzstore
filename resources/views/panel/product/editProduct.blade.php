@@ -82,6 +82,15 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="date" class="col-sm-2 control-label">Expiry Date <span
+                                class="text-danger">*</span></label>
+                    <div class="col-sm-2">
+                        <input type="date" class="form-control" name="expiry" value="{{$productByID->expiry}}">
+                        <span class="text-danger">{{ $errors->has('expiry') ? $errors->first('expiry') : '' }}</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <label for="inputPassword3" class="col-sm-2 control-label">Product Notes</label>
                     <div class="col-sm-10">
                         <textarea class="form-control" name="productNotes" value="{{$productByID->id}}" rows="5"></textarea>
