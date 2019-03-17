@@ -31,6 +31,7 @@ class ProductController extends Controller
             'productBrandID' => 'required',
             'productQuantity' => 'required',
             'productSellingPrice' => 'required',
+            'productBuyingPrice' => 'required'
         ]);
         //EORM Method 1
         $product = new Product();

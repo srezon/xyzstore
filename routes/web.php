@@ -125,9 +125,12 @@ Route::get('/customer/', function () {
 Route::get('/customers/', 'CustomerController@viewCustomers');
 Route::get('/customer/do/', 'CustomerController@findCustomer');
 //edit
+//here id is customer's phone number
 Route::get('/customer/edit/{id}', 'CustomerController@editCustomer');
 //sell to specific customer
 Route::get('/customer/{id}', 'CustomerController@sellToCustomer');
+//update
+Route::post('customer/update', 'CustomerController@update');
 
 
 //INVOICE ROUTES

@@ -3,13 +3,13 @@
     <hr>
     <div class="container">
         <ul class="nav nav-pills">
-            <li class="active"><a href="http://localhost/XYZStore/sales/">All Time</a></li>
-            <li><a href="http://localhost/XYZStore/sales/thismonth">This Month</a></li>
-            <li><a href="http://localhost/XYZStore/sales/lastmonth">Last Month</a></li>
-            <li><a href="http://localhost/XYZStore/sales/thisweek">This Week</a></li>
-            <li><a href="http://localhost/XYZStore/sales/lastweek">Last Week</a></li>
-            <li><a href="http://localhost/XYZStore/sales/today">Today</a></li>
-            <li><a href="http://localhost/XYZStore/sales/yesterday">Yesterday</a></li>
+            <li class="active"><a href="{{url('/sales/')}}">All Time</a></li>
+            <li><a href="{{url('/sales/thismonth')}}">This Month</a></li>
+            <li><a href="{{url('/sales/lastmonth')}}">Last Month</a></li>
+            <li><a href="{{url('/sales/thisweek')}}">This Week</a></li>
+            <li><a href="{{'/sales/lastweek'}}">Last Week</a></li>
+            <li><a href="{{url('/sales/today')}}">Today</a></li>
+            <li><a href="{{url('/sales/yesterday')}}">Yesterday</a></li>
         </ul>
     </div>
     <hr/>
@@ -30,7 +30,6 @@
                 <th>Product Quantity</th>
                 <th>Price Per Unit</th>
                 <th>Total Bill</th>
-                <th>Action</th>
             </tr>
             </thead>
             <tbody>
@@ -42,11 +41,6 @@
                     <td>{{ $sale->purchaseQuantity }}</td>
                     <td>TK. {{ $sale->productSellingPrice }}</td>
                     <td>TK. {{ $sale->totalBill }}</td>
-                    <td>
-                        <a href="{{ url('/sales/print/'.$sale->id) }}" class="btn btn-info" title="Product View">
-                            <span class="glyphicon glyphicon-print"></span>
-                        </a>
-                    </td>
                 </tr>
             @endforeach
             </tbody>
@@ -80,7 +74,7 @@
             </tbody>
         </table>
         <hr/>
-<h3>Top Customers by Expense</h3>
+        <h3>Top Customers by Expense</h3>
         <table class="table table-bordered table-hover">
             <thead>
             <tr style="background-color: #4DB6AC; color: white;">

@@ -56,7 +56,7 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Invoice Code</label>
                         <div class="col-sm-10">
-                            <select class="form-control" name="invoiceCode">
+                            <select class="form-control" name="invoiceCode" required>
                                 <option>Select Invoice Code</option>
                                 @foreach($invoices as $invoice)
                                     <option value="{{ $invoice->invoiceCode }}">{{ $invoice->invoiceCode }}</option>

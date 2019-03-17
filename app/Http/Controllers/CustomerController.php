@@ -16,10 +16,9 @@ class CustomerController extends Controller
 
         $customers = DB::table('customers')
             ->leftJoin('sales', 'customers.id', '=', 'sales.customerID')
-            ->select( 'customers.id', 'customers.firstName', 'customers.lastName', 'customers.phoneNumber', 'customers.email', 'customers.address', DB::raw('IFNULL(SUM(sales.purchaseQuantity), 0) as totalProductsBought'), DB::raw('IFNULL(SUM(sales.totalBill), 0) as totalPurchasedBDT'))
+            ->select('customers.id', 'customers.firstName', 'customers.lastName', 'customers.phoneNumber', 'customers.email', 'customers.address', DB::raw('IFNULL(SUM(sales.purchaseQuantity), 0) as totalProductsBought'), DB::raw('IFNULL(SUM(sales.totalBill), 0) as totalPurchasedBDT'))
             ->groupBy('customers.id', 'customers.firstName', 'customers.lastName', 'customers.phoneNumber', 'customers.email', 'customers.address')
             ->get();
-
 
         return view('panel.customer.viewCustomers')
             ->with('customers', $customers)
@@ -76,5 +75,19 @@ class CustomerController extends Controller
         $customerByPhone = Customer::where('phoneNumber', $id)->first();
         return view('panel.customer.sellToCustomer')
             ->with('customerByPhone', $customerByPhone);
+    }
+
+    public function editCustomer($id)
+    {
+        $phoneNumber = $id;
+         $customer = Customer::where('phoneNumber', $phoneNumber)->first();
+        return view('panel.customer.editCustomer')->with('customer', $customer);
+//        return $customer;
+    }
+
+    public function update(Request $request) {
+        $customer = new Customer();
+        $customer->find($request->id)->fill($request->all())->save();
+        return redirect()->back()->with('msg', 'Customer record updated successfully.');
     }
 }

@@ -32,7 +32,7 @@
                     <a href="{{ url('/customer/edit/'.$customerByPhone->phoneNumber) }}" class="btn btn-success" title="Edit Customer">
                         <span class="glyphicon glyphicon-edit"></span>
                     </a>
-                     <a href="{{ url('/customer/view/'.$customerByPhone->phoneNumber) }}" class="btn btn-success" title="Sell Product to Customer">
+                     <a href="{{ url('/customer/'.$customerByPhone->phoneNumber) }}" class="btn btn-success" title="Sell Product to Customer">
                         <span class="glyphicon glyphicon-shopping-cart"></span>
                     </a>
                 </td>

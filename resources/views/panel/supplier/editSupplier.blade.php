@@ -52,8 +52,8 @@
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">Supplier Address</label>
                     <div class="col-sm-10">
-                        <input type="number" class="form-control" value="{{$supplier->supplierAddress}}"
-                               name="supplierAddress">
+                        <textarea type="number" class="form-control"
+                                  name="supplierAddress">{{$supplier->supplierAddress}}</textarea>
                         <span class="text-danger">{{ $errors->has('supplierAddress') ? $errors->first('supplierAddress') : '' }}</span>
                     </div>
                 </div>
