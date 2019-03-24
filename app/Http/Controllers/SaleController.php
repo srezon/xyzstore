@@ -100,8 +100,8 @@ class SaleController extends Controller
             'customerID' => 'required',
             'productID' => 'required',
             'productByID' => 'required',
-            'pricePerUnit' => 'required',
-            'purchaseQuantity' => 'required',
+            'pricePerUnit' => 'required|integer|min:1',
+            'purchaseQuantity' => 'required|integer|min:1',
             'invoiceCode' => 'required',
         ]);
 

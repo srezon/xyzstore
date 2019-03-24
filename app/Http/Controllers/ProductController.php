@@ -29,9 +29,9 @@ class ProductController extends Controller
             'productName' => 'required',
             'productCategoryID' => 'required',
             'productBrandID' => 'required',
-            'productQuantity' => 'required',
-            'productSellingPrice' => 'required',
-            'productBuyingPrice' => 'required'
+            'productQuantity' => 'required|integer|min:1',
+            'productSellingPrice' => 'required|integer|min:1',
+            'productBuyingPrice' => 'required|integer|min:1'
         ]);
         //EORM Method 1
         $product = new Product();
@@ -72,7 +72,15 @@ class ProductController extends Controller
 
     public function updateProduct(Request $request)
     {
-
+//validation
+        $this->validate($request, [
+            'productName' => 'required',
+            'productCategoryID' => 'required',
+            'productBrandID' => 'required',
+            'productQuantity' => 'required|integer|min:1',
+            'productSellingPrice' => 'required|integer|min:1',
+            'productBuyingPrice' => 'required|integer|min:1'
+        ]);
         $product = Product::find($request->productID);
         $product->productName = $request->productName;
         $product->productModel = $request->productModel;
