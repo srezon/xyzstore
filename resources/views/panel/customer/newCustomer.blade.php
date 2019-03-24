@@ -4,7 +4,13 @@
     <hr/>
     <div class="row">
         <div class="col-lg-12">
-            <h3 class="text-center text-success">{{Session::get('msg')}}</h3>
+            <h3 class="text-center text-success">
+                @if ($firstMsg)
+                    {{$firstMsg}}
+                @elseif ($msg)
+                    {{$msg}}
+                @endif
+            </h3>
             <hr/>
             <div class="well">
                 {!! Form::open( [ 'url'=>'customer/save', 'method' =>'POST', 'class' =>'form-horizontal', 'enctype'=>'multipart/form-data' ] ) !!}
@@ -45,7 +51,8 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" name="btn" class="btn btn-success btn-block">Add Customer to Record</button>
+                        <button type="submit" name="btn" class="btn btn-success btn-block">Add Customer to Record
+                        </button>
                     </div>
                 </div>
 

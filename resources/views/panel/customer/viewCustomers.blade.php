@@ -7,7 +7,7 @@
             <div class="input-group add-on form-group">
                 <input class="form-control" placeholder="Find Customer with Phone Number..." name="customerPhone"
                        id="srch-term"
-                       type="number">
+                       type="number" required>
                 <div class="input-group-btn">
                     <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
                 </div>

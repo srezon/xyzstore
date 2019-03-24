@@ -30,32 +30,22 @@ class CustomerController extends Controller
 //retrive specific customer of received phone number
         $customerPhone = $request->customerPhone;
         $customerByPhone = Customer::where('phoneNumber', $customerPhone)->first();
-        $customers = Customer::all();
+        $customers = DB::table('customers')
+            ->leftJoin('sales', 'customers.id', '=', 'sales.customerID')
+            ->select('customers.id', 'customers.firstName', 'customers.lastName', 'customers.phoneNumber', 'customers.email', 'customers.address', DB::raw('IFNULL(SUM(sales.purchaseQuantity), 0) as totalProductsBought'), DB::raw('IFNULL(SUM(sales.totalBill), 0) as totalPurchasedBDT'))
+            ->groupBy('customers.id', 'customers.firstName', 'customers.lastName', 'customers.phoneNumber', 'customers.email', 'customers.address')
+            ->get();
         return view('panel.customer.foundCustomer')
             ->with('customerByPhone', $customerByPhone)
             ->with('customers', $customers)
             ->with('firstMsg', 'Matched Customer for: ')
             ->with('secondMsg', 'Recorded Customers:');
-        //retrive specific product of received ID
-        //$productID = $request->productID;
-        //$productByID = Product::find($productID);
-
-        //retrive category name from category ID
-        //$categoryID = $productByID->productCategoryID;
-        //$productCategory = Category::find($categoryID);
-        //$actualCategory = $productCategory->categoryName;
-
-        //retrive customer
-        //$customerID = $request->customerID;
-        //$customerByID = Customer::find($customerID);
-
-        //return view('panel.sale.newSale')->with(['productByID' => $productByID])->with(['actualCategory' => $actualCategory])->with(['customerByID' => $customerByID]);
-
     }
 
     public function newCustomer()
     {
-        return view('panel.customer.newCustomer')->with('firstMsg', 'Add new Customer:');
+        return view('panel.customer.newCustomer')
+            ->with('firstMsg', 'Add new Customer');
     }
 
     public function saveCustomer(Request $request)
@@ -72,7 +62,11 @@ class CustomerController extends Controller
 
     public function sellToCustomer($id)
     {
-        $customerByPhone = Customer::where('phoneNumber', $id)->first();
+        $customerByPhone = DB::table('customers')
+            ->leftJoin('sales', 'customers.id', '=', 'sales.customerID')
+            ->select('customers.id', 'customers.firstName', 'customers.lastName', 'customers.phoneNumber', 'customers.email', 'customers.address', DB::raw('IFNULL(SUM(sales.purchaseQuantity), 0) as totalProductsBought'), DB::raw('IFNULL(SUM(sales.totalBill), 0) as totalPurchasedBDT'))
+            ->groupBy('customers.id', 'customers.firstName', 'customers.lastName', 'customers.phoneNumber', 'customers.email', 'customers.address')
+            ->where('phoneNumber', $id)->first();
         return view('panel.customer.sellToCustomer')
             ->with('customerByPhone', $customerByPhone);
     }
@@ -80,12 +74,13 @@ class CustomerController extends Controller
     public function editCustomer($id)
     {
         $phoneNumber = $id;
-         $customer = Customer::where('phoneNumber', $phoneNumber)->first();
+        $customer = Customer::where('phoneNumber', $phoneNumber)->first();
         return view('panel.customer.editCustomer')->with('customer', $customer);
 //        return $customer;
     }
 
-    public function update(Request $request) {
+    public function update(Request $request)
+    {
         $customer = new Customer();
         $customer->find($request->id)->fill($request->all())->save();
         return redirect()->back()->with('msg', 'Customer record updated successfully.');

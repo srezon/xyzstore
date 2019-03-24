@@ -53,12 +53,12 @@ class SaleController extends Controller
             ->delete();
 
 
-        //pre-generate  and store invoice code from current date and time
+        //Pre-generate  and store invoice code from current date and time
         $currentDateTime = Carbon::now()->toDateTimeString();
         $invoiceCode = str_replace(["-", "–", "/", " ", ':'], '', $currentDateTime);
 
 
-        //store the temporary generated invoice code
+        //Store the temporary generated invoice code
         $invoice = new Invoice();
         $invoice->invoiceCode = $invoiceCode;
         $invoice->customerID = $customerByID->id;
@@ -68,9 +68,17 @@ class SaleController extends Controller
 
 
         $invoices = DB::table('invoices')
-            ->select('invoiceCode')
             ->where('delivered', '=', '0')
             ->get();
+
+        foreach ($invoices as $invoice) {
+            if ($invoice->isProductAssigned == 0) {
+                $invoice->invoiceCodeDetails = $invoice->invoiceCode . ' (New Invoice)';
+            } else {
+                $theCustomer = Customer::find($invoice->customerID);
+                $invoice->invoiceCodeDetails = $invoice->invoiceCode . ' (Undelivered/Pending Invoice - ' . $theCustomer->firstName . ' - ' . $theCustomer->phoneNumber . ')';
+            }
+        }
 
         if (isset($actualCategory) && !empty($customerByID)) {
             return view('panel.sale.newSale')
@@ -98,7 +106,7 @@ class SaleController extends Controller
         ]);
 
         $thisProduct = Product::find($request->productID);
-        if ($thisProduct->productQuantity >= 0) {
+        if ($thisProduct->productQuantity <= 0) {
             return redirect()->back()->withInput($request->all())->with('stockOut', 'This Product is out of stock');
         }
 
