@@ -9,7 +9,6 @@
             <li><a href="{{url('/sales/thisweek')}}">This Week</a></li>
             <li><a href="{{'/sales/lastweek'}}">Last Week</a></li>
             <li><a href="{{url('/sales/today')}}">Today</a></li>
-            <li><a href="{{url('/sales/yesterday')}}">Yesterday</a></li>
         </ul>
     </div>
     <hr/>

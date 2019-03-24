@@ -15,6 +15,16 @@ use Illuminate\Http\Request;
 
 class SaleController extends Controller
 {
+    const SATURDAY = 0;
+    const SUNDAY = 1;
+    const MONDAY = 2;
+    const TUESDAY = 3;
+    const WEDNESDAY = 4;
+    const THURSDAY = 5;
+    const FRIDAY = 6;
+
+    protected static $weekStartsAt = self::SATURDAY;
+    protected static $weekEndsAt = self::FRIDAY;
     public function newSale()
     {
 
@@ -448,11 +458,7 @@ class SaleController extends Controller
 
         //get records of all sales
         //$sales = Sale::all();
-        $sales = DB::table('sales')
-            ->leftJoin('customers', 'sales.customerID', '=', 'customers.id')
-            ->leftJoin('products', 'sales.productID', '=', 'products.id')
-            ->select('sales.id', 'customers.firstName', 'customers.lastName', 'products.productName', 'products.productModel', 'sales.purchaseQuantity', 'products.productSellingPrice', 'sales.totalBill')
-            ->whereDate('sales.created_at', '>=', Carbon::now('Asia/Dhaka')->startOfWeek())
+        $sales = DB::table('sales')->whereDate('sales.created_at', '>=', Carbon::now('Asia/Dhaka')->startOfWeek())
             ->get();
 
         $totalCustomers = DB::table('customers')
