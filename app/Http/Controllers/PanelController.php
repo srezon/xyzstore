@@ -12,6 +12,7 @@ use App\Supplier;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Arr as Arr;
 
 
 class PanelController extends Controller
@@ -31,9 +32,11 @@ class PanelController extends Controller
 //            return view('panel.home.home', ['categoryCount'=>$categoryCount]);
             //passing data with with method
 
-            $weeklyTransition['buying'] = $this->getWeeklyBuying();
-            $weeklyTransition['selling'] = $this->getWeeklySelling();
-//            return $weeklyTransition['buying'];
+            $weeklyBuying = array_flatten($this->getWeeklyBuying());
+//            $weeklySelling = $this->getWeeklySelling()->toArray();
+//            return array_flatten($weeklyBuying->toArray());
+//            $weeklySellingArray = Arr::flatten($weeklySelling->toArray());
+            return $weeklyBuying;
 
             return view('panel.home.home')
                 ->with('categoryCount', $categoryCount)
@@ -42,25 +45,33 @@ class PanelController extends Controller
                 ->with('brandCount', $brandCount)
                 ->with('customerCount', $customerCount)
                 ->with('supplierCount', $supplierCount)
-                ;
+                ->with('weeklyBuying', $weeklyBuying);
         }
 
 //        Sir handled it with middleware https://www.youtube.com/watch?v=0bHy8O9GpFY&t=5939s (16:0)
     }
 
 
+
     private function getWeeklyBuying()
     {
         $products = new Product();
-        return $products->select('productBuyingPrice as total')
+        return $products
+            ->select('productBuyingPrice as total')
             ->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
-            ->get();
+            //where between = date start to date end
+            ->orderBy('created_at', 'ASC')
+            ->get()->toArray();
+
+        //where between = date start to date end
+
     }
 
     private function getWeeklySelling()
     {
         $sales = new Sale();
-        return $sales->select('totalBill as total')
+        return $sales
+            ->select('totalBill as total')
             ->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
             ->get();
     }
