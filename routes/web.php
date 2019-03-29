@@ -146,10 +146,10 @@ Route::get('suppliers', 'SupplierController@index');
 Route::get('/supplier/edit/{id}', 'SupplierController@edit');
 
 
-Route::get('/customer/new', 'UserController@newUser');
-Route::post('/customer/save', 'UserController@saveUser');
-Route::get('/customers/', 'UserController@viewUsers');
-Route::get('/customer/edit/{id}', 'UserController@editUser');
-Route::post('customer/update', 'UserController@update');
+Route::get('/user/new', 'UserController@newUser');
+Route::post('/user/save', 'UserController@saveUser');
+Route::get('/users/', 'UserController@viewUsers');
+Route::get('/user/edit/{id}', 'UserController@editUser');
+Route::post('user/update', 'UserController@update');
 
 
