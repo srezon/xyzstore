@@ -36,7 +36,7 @@ class PanelController extends Controller
 //            $weeklySelling = $this->getWeeklySelling()->toArray();
 //            return array_flatten($weeklyBuying->toArray());
 //            $weeklySellingArray = Arr::flatten($weeklySelling->toArray());
-            return $weeklyBuying;
+//            return $weeklyBuying;
 
             return view('panel.home.home')
                 ->with('categoryCount', $categoryCount)
