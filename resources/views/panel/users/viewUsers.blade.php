@@ -1,21 +1,6 @@
 @extends('panel.master')
 @section('content')
     <hr>
-    <div class="container">
-        <div class="col-lg-11">
-            {!! Form::open( [ 'url'=>'customer/do/', 'method' =>'get', 'class' =>'form-horizontal', 'role'=>'search' ] ) !!}
-            <div class="input-group add-on form-group">
-                <input class="form-control" placeholder="Find Customer with Phone Number..." name="customerPhone"
-                       id="srch-term"
-                       type="number" required>
-                <div class="input-group-btn">
-                    <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-                </div>
-            </div>
-            {!! Form::close()!!}
-        </div>
-    </div>
-    <hr>
     <h3 class="text-center text-success">{{Session::get('msg')}}
         @if(Session::get('successMsg'))
             {{Session::get('successMsg')}}
@@ -28,35 +13,33 @@
         <thead>
         <tr>
             <th>ID</th>
-            <th>First Name</th>
-            <th>Last Name</th>
+            <th>Role</th>
+            <th>Name</th>
             <th>Contact Number</th>
             <th>Email</th>
             <th>Address</th>
-            <th>Total Products Bought</th>
-            <th>Total Purchase (BDT)</th>
             <th>Action</th>
         </tr>
         </thead>
         <tbody>
 
-        @foreach($customers as $customer)
+        @foreach($users as $user)
             <tr>
-                <td>{{$customer->id}}</td>
-                <td><a href="{{ url('/customer/'.$customer->phoneNumber) }}">{{$customer->firstName}}</a></td>
-                <td>{{$customer->lastName}}</td>
-                <td><a href="{{ url('/customer/'.$customer->phoneNumber) }}">{{$customer->phoneNumber}}</a></td>
-                <td>{{$customer->email}}</td>
-                <td>{{$customer->address}}</td>
-                <td>{{$customer->totalProductsBought}}</td>
-                <td>{{$customer->totalPurchasedBDT}}</td>
+                <td>{{$user->id}}</td>
+                <td><a href="{{ url('/user/'.$user->phoneNumber) }}">{{$user->firstName}}</a></td>
+                <td>{{$user->lastName}}</td>
+                <td><a href="{{ url('/user/'.$user->phoneNumber) }}">{{$user->phoneNumber}}</a></td>
+                <td>{{$user->email}}</td>
+                <td>{{$user->address}}</td>
+                <td>{{$user->totalProductsBought}}</td>
+                <td>{{$user->totalPurchasedBDT}}</td>
                 <td>
-                    <a href="{{ url('/customer/edit/'.$customer->phoneNumber) }}" class="btn btn-success"
-                       title="Edit Customer">
+                    <a href="{{ url('/user/edit/'.$user->phoneNumber) }}" class="btn btn-success"
+                       title="Edit User">
                         <span class="glyphicon glyphicon-edit"></span>
                     </a>
-                    <a href="{{ url('/customer/'.$customer->phoneNumber) }}" class="btn btn-success"
-                       title="Sell Product to Customer">
+                    <a href="{{ url('/user/'.$user->phoneNumber) }}" class="btn btn-success"
+                       title="Sell Product to User">
                         <span class="glyphicon glyphicon-shopping-cart"></span>
                     </a>
                 </td>
