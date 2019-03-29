@@ -26,21 +26,15 @@
         @foreach($users as $user)
             <tr>
                 <td>{{$user->id}}</td>
-                <td><a href="{{ url('/user/'.$user->phoneNumber) }}">{{$user->firstName}}</a></td>
-                <td>{{$user->lastName}}</td>
-                <td><a href="{{ url('/user/'.$user->phoneNumber) }}">{{$user->phoneNumber}}</a></td>
+                <td>{{$user->roleName}}</td>
+                <td>{{$user->name}}</td>
+                <td>{{$user->contact}}</td>
                 <td>{{$user->email}}</td>
                 <td>{{$user->address}}</td>
-                <td>{{$user->totalProductsBought}}</td>
-                <td>{{$user->totalPurchasedBDT}}</td>
                 <td>
                     <a href="{{ url('/user/edit/'.$user->phoneNumber) }}" class="btn btn-success"
                        title="Edit User">
                         <span class="glyphicon glyphicon-edit"></span>
-                    </a>
-                    <a href="{{ url('/user/'.$user->phoneNumber) }}" class="btn btn-success"
-                       title="Sell Product to User">
-                        <span class="glyphicon glyphicon-shopping-cart"></span>
                     </a>
                 </td>
             </tr>
