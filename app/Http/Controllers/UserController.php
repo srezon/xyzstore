@@ -15,10 +15,17 @@ class UserController extends Controller
         //$users = User::all();
 
         $users = DB::table('users')->get();
+        foreach ($users as $user) {
+            if ($user->role_id == null || $user->role_id == 1) {
+                $user->roleName = 'Admin/Manager';
+            } else {
+                $user->roleName = 'User/Employee';
+            }
+        }
 
         return view('panel.user.viewUsers')
             ->with('users', $users)
-            ->with('firstMsg', 'Software Users');
+            ->with('firstMsg', 'System Users/Employee');
     }
 
 
@@ -29,10 +36,8 @@ class UserController extends Controller
 
     public function editUser($id)
     {
-        $phoneNumber = $id;
-        $user = User::where('phoneNumber', $phoneNumber)->first();
+        $user = User::find($id);
         return view('panel.user.editUser')->with('user', $user);
-//        return $user;
     }
 
     public function update(Request $request)

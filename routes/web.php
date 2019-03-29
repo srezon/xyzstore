@@ -151,5 +151,3 @@ Route::post('/user/save', 'UserController@saveUser');
 Route::get('/users/', 'UserController@viewUsers');
 Route::get('/user/edit/{id}', 'UserController@editUser');
 Route::post('user/update', 'UserController@update');
-
-

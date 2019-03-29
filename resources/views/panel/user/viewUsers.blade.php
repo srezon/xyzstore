@@ -22,7 +22,6 @@
         </tr>
         </thead>
         <tbody>
-
         @foreach($users as $user)
             <tr>
                 <td>{{$user->id}}</td>
@@ -32,7 +31,7 @@
                 <td>{{$user->email}}</td>
                 <td>{{$user->address}}</td>
                 <td>
-                    <a href="{{ url('/user/edit/'.$user->phoneNumber) }}" class="btn btn-success"
+                    <a href="{{ url('/user/edit/'.$user->id) }}" class="btn btn-success"
                        title="Edit User">
                         <span class="glyphicon glyphicon-edit"></span>
                     </a>
