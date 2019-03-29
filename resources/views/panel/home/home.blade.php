@@ -184,10 +184,10 @@
                     }
                 },
                 series: [{
-                    name: 'Expenditure',
+                    name: 'Sale',
                     data: [3000, 4000, 3000, 5000, 4000, 10000, 10002]
                 }, {
-                    name: 'Earnings',
+                    name: 'Buy',
                     data: [1000, 3000, 4000, 3000, 3000, 5000, 4000]
                 }]
             });
