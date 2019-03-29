@@ -15,6 +15,16 @@ use Illuminate\Http\Request;
 
 class SaleController extends Controller
 {
+    const SATURDAY = 0;
+    const SUNDAY = 1;
+    const MONDAY = 2;
+    const TUESDAY = 3;
+    const WEDNESDAY = 4;
+    const THURSDAY = 5;
+    const FRIDAY = 6;
+
+    protected static $weekStartsAt = self::SATURDAY;
+    protected static $weekEndsAt = self::FRIDAY;
     public function newSale()
     {
 
@@ -53,12 +63,12 @@ class SaleController extends Controller
             ->delete();
 
 
-        //pre-generate  and store invoice code from current date and time
+        //Pre-generate  and store invoice code from current date and time
         $currentDateTime = Carbon::now()->toDateTimeString();
         $invoiceCode = str_replace(["-", "–", "/", " ", ':'], '', $currentDateTime);
 
 
-        //store the temporary generated invoice code
+        //Store the temporary generated invoice code
         $invoice = new Invoice();
         $invoice->invoiceCode = $invoiceCode;
         $invoice->customerID = $customerByID->id;
@@ -68,9 +78,17 @@ class SaleController extends Controller
 
 
         $invoices = DB::table('invoices')
-            ->select('invoiceCode')
             ->where('delivered', '=', '0')
             ->get();
+
+        foreach ($invoices as $invoice) {
+            if ($invoice->isProductAssigned == 0) {
+                $invoice->invoiceCodeDetails = $invoice->invoiceCode . ' (New Invoice)';
+            } else {
+                $theCustomer = Customer::find($invoice->customerID);
+                $invoice->invoiceCodeDetails = $invoice->invoiceCode . ' (Undelivered/Pending Invoice - ' . $theCustomer->firstName . ' - ' . $theCustomer->phoneNumber . ')';
+            }
+        }
 
         if (isset($actualCategory) && !empty($customerByID)) {
             return view('panel.sale.newSale')
@@ -92,10 +110,15 @@ class SaleController extends Controller
             'customerID' => 'required',
             'productID' => 'required',
             'productByID' => 'required',
-            'pricePerUnit' => 'required',
-            'purchaseQuantity' => 'required',
+            'pricePerUnit' => 'required|integer|min:1',
+            'purchaseQuantity' => 'required|integer|min:1',
             'invoiceCode' => 'required',
         ]);
+
+        $thisProduct = Product::find($request->productID);
+        if ($thisProduct->productQuantity <= 0) {
+            return redirect()->back()->withInput($request->all())->with('stockOut', 'This Product is out of stock');
+        }
 
 
         $isOldInvoice = DB::table('invoices')
@@ -203,9 +226,9 @@ class SaleController extends Controller
         $totalProfit = $totalSaleCost[0]->totalBill - $totalCost[0]->totalCost;
 
         //finding profit percentage
-        if ($totalCost[0]->totalCost == 0){
+        if ($totalCost[0]->totalCost == 0) {
             $profitPercentage = 0;
-        }else{
+        } else {
             $profitPercentage = round(($totalProfit * 100) / $totalCost[0]->totalCost);
 
         }
@@ -435,11 +458,7 @@ class SaleController extends Controller
 
         //get records of all sales
         //$sales = Sale::all();
-        $sales = DB::table('sales')
-            ->leftJoin('customers', 'sales.customerID', '=', 'customers.id')
-            ->leftJoin('products', 'sales.productID', '=', 'products.id')
-            ->select('sales.id', 'customers.firstName', 'customers.lastName', 'products.productName', 'products.productModel', 'sales.purchaseQuantity', 'products.productSellingPrice', 'sales.totalBill')
-            ->whereDate('sales.created_at', '>=', Carbon::now('Asia/Dhaka')->startOfWeek())
+        $sales = DB::table('sales')->whereDate('sales.created_at', '>=', Carbon::now('Asia/Dhaka')->startOfWeek())
             ->get();
 
         $totalCustomers = DB::table('customers')

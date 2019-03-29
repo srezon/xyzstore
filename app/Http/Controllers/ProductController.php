@@ -29,8 +29,9 @@ class ProductController extends Controller
             'productName' => 'required',
             'productCategoryID' => 'required',
             'productBrandID' => 'required',
-            'productQuantity' => 'required',
-            'productSellingPrice' => 'required',
+            'productQuantity' => 'required|integer|min:1',
+            'productSellingPrice' => 'required|integer|min:1',
+            'productBuyingPrice' => 'required|integer|min:1'
         ]);
         //EORM Method 1
         $product = new Product();
@@ -42,6 +43,7 @@ class ProductController extends Controller
         $product->productBuyingPrice = $request->productBuyingPrice;
         $product->productSellingPrice = $request->productSellingPrice;
         $product->productNotes = $request->productNotes;
+        $product->expiry = $request->expiry;
         $product->save();
         return redirect('/product/new')->with('successMsg', 'Product added to inventory successfully!');
     }
@@ -70,7 +72,15 @@ class ProductController extends Controller
 
     public function updateProduct(Request $request)
     {
-
+//validation
+        $this->validate($request, [
+            'productName' => 'required',
+            'productCategoryID' => 'required',
+            'productBrandID' => 'required',
+            'productQuantity' => 'required|integer|min:1',
+            'productSellingPrice' => 'required|integer|min:1',
+            'productBuyingPrice' => 'required|integer|min:1'
+        ]);
         $product = Product::find($request->productID);
         $product->productName = $request->productName;
         $product->productModel = $request->productModel;
@@ -80,6 +90,7 @@ class ProductController extends Controller
         $product->productBuyingPrice = $request->productBuyingPrice;
         $product->productSellingPrice = $request->productSellingPrice;
         $product->productNotes = $request->productNotes;
+        $product->expiry = $request->expiry;
         $product->save();
 
         return redirect('/products')->with('successMsg', 'Product Updated!');
@@ -102,8 +113,12 @@ class ProductController extends Controller
             ->leftJoin('categories', 'products.productCategoryID', '=', 'categories.id')
             ->leftJoin('brands', 'products.productBrandID', '=', 'brands.id')
             ->leftJoin('sales', 'products.id', '=', 'sales.productID')
-            ->select('products.id', 'products.productName', 'products.productModel', 'products.productCategoryID', 'products.productBrandID', 'products.productQuantity', 'products.productSellingPrice', 'products.productNotes', 'categories.categoryName', 'brands.brandName', DB::raw('IFNULL(SUM(sales.purchaseQuantity), 0) as productTotalSold'))
-            ->groupBy('products.id', 'products.productName', 'products.productModel', 'products.productCategoryID', 'products.productBrandID', 'products.productQuantity', 'products.productSellingPrice', 'products.productNotes', 'products.created_at', 'products.updated_at', 'categories.categoryName', 'brands.brandName')
+            ->select('products.id', 'products.productName', 'products.productModel', 'products.productCategoryID',
+                'products.productBrandID', 'products.productQuantity', 'products.productSellingPrice', 'products.productNotes',
+                'categories.categoryName', 'brands.brandName', 'products.expiry', DB::raw('IFNULL(SUM(sales.purchaseQuantity), 0) as productTotalSold'))
+            ->groupBy('products.id', 'products.productName', 'products.productModel', 'products.productCategoryID', 'products.productBrandID',
+                'products.productQuantity', 'products.productSellingPrice', 'products.productNotes', 'products.created_at', 'products.updated_at',
+                'categories.categoryName', 'brands.brandName')
             ->get();
 
 

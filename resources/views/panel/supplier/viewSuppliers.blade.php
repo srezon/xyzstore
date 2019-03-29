@@ -40,7 +40,7 @@
                 <th scope="row">{{$supplier->supplierAddress}}</th>
 
                 <td>
-                    <a href="{{url('/supplier/edit/'.$supplier->brand->id)}}" class="btn btn-default">
+                    <a href="{{url('/supplier/edit/'.$supplier->id)}}" class="btn btn-default">
                         <span class="glyphicon glyphicon-edit"></span>
                     </a>
                     @if($supplier->brand == null)

@@ -35,6 +35,7 @@
             <th>Product Brand</th>
             <th>Product Quantity</th>
             <th>Product Price</th>
+            <th>Expiry</th>
             <th>Product Notes</th>
             <th>Action</th>
         </tr>
@@ -48,6 +49,7 @@
                 <td><a class="link2" href="{{ url('/brand/'.$foundProduct->productBrandID) }}">{{$foundProductBrandName->brandName}}</a></td>
                 <td>{{ $foundProduct->productQuantity }}</td>
                 <td>TK. {{ $foundProduct->productSellingPrice }}</td>
+                <td>{{ $foundProduct->expiry }}</td>
                 <td>{{ $foundProduct->productNotes }}</td>
                 <td>
                     {{--<a href="{{ url('/products/view/'.$product->id) }}" class="btn btn-info" title="Product View">--}}

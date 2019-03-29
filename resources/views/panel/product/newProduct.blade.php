@@ -16,7 +16,7 @@
             <div class="well">
                 {!! Form::open( [ 'url'=>'product/save', 'method' =>'POST', 'class' =>'form-horizontal', 'enctype'=>'multipart/form-data' ] ) !!}
                 <div class="form-group">
-                    <label class="col-sm-2 control-label">Product Name</label>
+                    <label class="col-sm-2 control-label">Product Name <span class="text-danger">*</span></label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" name="productName">
                         <span class="text-danger">{{ $errors->has('productName') ? $errors->first('productName') : '' }}</span>
@@ -30,7 +30,8 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputPassword3" class="col-sm-2 control-label">Product Category</label>
+                    <label for="inputPassword3" class="col-sm-2 control-label">Product Category <span
+                                class="text-danger">*</span></label>
                     <div class="col-sm-10">
                         <select class="form-control" name="productCategoryID">
                             <option>Select Category Name</option>
@@ -44,7 +45,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-2 control-label">Product Brand</label>
+                    <label class="col-sm-2 control-label">Product Brand <span class="text-danger">*</span></label>
                     <div class="col-sm-10">
                         <select class="form-control" name="productBrandID">
                             <option>Select Category Name</option>
@@ -56,23 +57,35 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Product Quantity</label>
+                    <label for="inputEmail3" class="col-sm-2 control-label">Product Quantity <span
+                                class="text-danger">*</span></label>
                     <div class="col-sm-10">
                         <input type="number" class="form-control" name="productQuantity">
                         <span class="text-danger">{{ $errors->has('productQuantity') ? $errors->first('productQuantity') : '' }}</span>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Product Buying Price</label>
+                    <label for="inputEmail3" class="col-sm-2 control-label">Product Buying Price <span
+                                class="text-danger">*</span></label>
                     <div class="col-sm-10">
                         <input type="number" class="form-control" name="productBuyingPrice">
                         <span class="text-danger">{{ $errors->has('productBuyingPrice') ? $errors->first('productBuyingPrice') : '' }}</span>
                     </div>
-                </div><div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Product Selling Price</label>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Product Selling Price <span
+                                class="text-danger">*</span></label>
                     <div class="col-sm-10">
                         <input type="number" class="form-control" name="productSellingPrice">
                         <span class="text-danger">{{ $errors->has('productSellingPrice') ? $errors->first('productSellingPrice') : '' }}</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="date" class="col-sm-2 control-label">Expiry Date <span
+                                class="text-danger">*</span></label>
+                    <div class="col-sm-2">
+                        <input type="date" class="form-control" name="expiry">
+                        <span class="text-danger">{{ $errors->has('expiry') ? $errors->first('expiry') : '' }}</span>
                     </div>
                 </div>
 
@@ -83,15 +96,17 @@
                         <span class="text-danger">{{ $errors->has('productNotes') ? $errors->first('productNotes') : '' }}</span>
                     </div>
                 </div>
-
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" name="btn" class="btn btn-success btn-block">Save Product Info</button>
-                    </div>
-                </div>
-                {!! Form::close() !!}
             </div>
+
+
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" name="btn" class="btn btn-success btn-block">Save Product Info</button>
+                </div>
+            </div>
+            {!! Form::close() !!}
         </div>
+    </div>
     </div>
 
 @endsection
