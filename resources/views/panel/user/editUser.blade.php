@@ -15,7 +15,9 @@
                     <div class="col-sm-10">
                         <select class="form-control" name="productCategoryID">
                             <option>Select Role</option>
-                            <option value="1" @if($user->role_id == 1 || $user->role_id == null) selected @endif>Admin/Manager</option>
+                            <option value="1" @if($user->role_id == 1 || $user->role_id == null) selected @endif>
+                                Admin/Manager
+                            </option>
                             <option value="2" @if($user->role_id == 2) selected @endif>User/Employee</option>
                         </select>
                     </div>
