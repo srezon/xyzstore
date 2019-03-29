@@ -46,7 +46,7 @@
 
                     {!! Form::open(['url'=>'/login', 'method' =>'POST']) !!}
                     <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                        {{ Form::email('email', null, ['class' => 'form-control', 'placeholder'=>'e.g. jaber@gmail.com']) }}
+                        {{ Form::email('email', null, ['class' => 'form-control', 'placeholder'=>'e.g. srezon@gmail.com']) }}
                         @if ($errors->has('email'))
                             <span class="help-block">
                                     <strong>{{ $errors->first('email') }}</strong>
