@@ -19,7 +19,6 @@ Auth::routes();
 Route::get('/home', 'HomeController@index');
 
 
-
 //CATEGORY ROUTES
 //add
 Route::get('/category/new', 'CategoryController@newCategory');
@@ -145,4 +144,12 @@ Route::post('supplier/save/', 'SupplierController@store');
 Route::post('supplier/update/{id}', 'SupplierController@update');
 Route::get('suppliers', 'SupplierController@index');
 Route::get('/supplier/edit/{id}', 'SupplierController@edit');
+
+
+Route::get('/customer/new', 'UserController@newUser');
+Route::post('/customer/save', 'UserController@saveUser');
+Route::get('/customers/', 'UserController@viewUsers');
+Route::get('/customer/edit/{id}', 'UserController@editUser');
+Route::post('customer/update', 'UserController@update');
+
 
