@@ -33,11 +33,12 @@ class SaleController extends Controller
 
     public function doSale(Request $request)
     {
-        //return $request->id;
+//        return $request->all();
+        //return $
+        //return request->id;
         //retrieve specific product of received ID
-        $productID = $request->productID;
-        $productByID = Product::find($productID);
-
+        $productId = $request->productId;
+         $productByID = Product::find($productId);
         //retrieve category name from category ID
         if (!empty($productByID)) {
             $categoryID = $productByID->productCategoryID;

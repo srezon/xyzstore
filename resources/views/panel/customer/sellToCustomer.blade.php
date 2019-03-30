@@ -46,22 +46,30 @@
         <div class="col-lg-11">
             {!! Form::open( [ 'url'=>'sale/do/', 'method' =>'get', 'class' =>'form-horizontal', 'role'=>'search' ] ) !!}
             <div class="input-group add-on form-group">
-                <select class="form-control select2" id="" name="productId">
-                    <option value> -- Select Product -- </option>
-                @foreach($productsArray as $key => $value)
+                <label class="control-label">Select Product</label>
+                <select class="form-control select2" id="" name="productId" required>
+                    <option value></option>
+                    @foreach($productsArray as $key => $value)
                         <option value="{{$key}}">{{$value}}</option>
                     @endforeach
                 </select>
                 <input type="hidden" value="{{ $customerByPhone->phoneNumber }}" class="form-control"
                        placeholder="Enter Customer ID to find them..." name="customerPhone" id="srch-term"
                        type="number">
-                <div class="input-group-btn">
-                    <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                <div class="input-group-btn ">
+                    <button class="btn btn-default btn-sm" type="submit"><i class="glyphicon glyphicon-search"></i></button>
                 </div>
             </div>
             {!! Form::close()!!}
         </div>
     </div>
     <hr>
-
+    <script>
+        $(document).ready(function () {
+            $('.select2').select2({
+                placeholder: 'Select a Product',
+                allowClear: true,
+            });
+        });
+    </script>
 @endsection
