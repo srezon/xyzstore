@@ -45,7 +45,7 @@
     <div class="container">
         <div class="col-lg-11">
             {!! Form::open( [ 'url'=>'sale/do/', 'method' =>'get', 'class' =>'form-horizontal', 'role'=>'search' ] ) !!}
-            <div class="input-group add-on form-group">
+            <div class="input-group add-on form-group col-md-10">
                 <label class="control-label">Select Product</label>
                 <select class="form-control select2" id="" name="productId" required>
                     <option value></option>
@@ -56,9 +56,7 @@
                 <input type="hidden" value="{{ $customerByPhone->phoneNumber }}" class="form-control"
                        placeholder="Enter Customer ID to find them..." name="customerPhone" id="srch-term"
                        type="number">
-                <div class="input-group-btn ">
-                    <button class="btn btn-default btn-sm" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-                </div>
+                <button class="btn btn-default btn-sm pull-right" type="submit"><i class="glyphicon glyphicon-search"></i></button>
             </div>
             {!! Form::close()!!}
         </div>
