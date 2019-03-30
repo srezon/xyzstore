@@ -31,9 +31,8 @@ class PanelController extends Controller
 
             $chart = new PanelChart;
             $chart->labels($this->getLastSevenDays());
-            $chart->dataset('Buying', 'line', [1, 2, 3, 4,2,3,4,4]);
-            $chart->dataset('Selling', 'line', [2,3,5,4, 3, 2, 1]);
-
+            $chart->dataset('Buying', 'line', $this->getBuyingOfLastSevenDays())->backgroundcolor('rgba(92, 184, 92, 0.5)');
+            $chart->dataset('Selling', 'line', $this->getSellingOfLastSevenDays())->backgroundcolor('rgba(217, 83, 79, 0.5)');
 
             return view('panel.home.home', compact(
                 'categoryCount' ,
@@ -46,8 +45,6 @@ class PanelController extends Controller
             ));
 
         }
-
-//        Sir handled it with middleware https://www.youtube.com/watch?v=0bHy8O9GpFY&t=5939s (16:0)
     }
 
     /**
@@ -62,5 +59,34 @@ class PanelController extends Controller
         }
         return array_flatten($days);
     }
+
+    /**
+     * Data of last 7 days
+     * @return array
+     */
+    private function getBuyingOfLastSevenDays ()
+    {
+        $products = new Product();
+        $prices = $products->select('productBuyingPrice as total')
+            ->whereBetween('created_at', [Carbon::now()->subDays(6), Carbon::now()->subDays(0)])
+            ->orderBy('created_at', 'ASC')
+            ->get();
+        return array_flatten($prices->toArray());
+    }
+
+    /**
+     * Data of last 7 days
+     * @return array
+     */
+    private function getSellingOfLastSevenDays ()
+    {
+        $sales = new Sale();
+        $prices = $sales->select('totalBill as total')
+            ->whereBetween('created_at', [Carbon::now()->subDays(6), Carbon::now()->subDays(0)])
+            ->orderBy('created_at', 'ASC')
+            ->get();
+        return array_flatten($prices->toArray());
+    }
+
 
 }
