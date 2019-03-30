@@ -193,7 +193,8 @@ return [
 
         Barryvdh\Debugbar\ServiceProvider::class,
 
-
+        //vendors
+        ConsoleTVs\Charts\ChartsServiceProvider::class,
 
     ],
 
@@ -249,6 +250,7 @@ return [
         'Html' => Collective\Html\HtmlFacade::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
 
+        //vendor alias
 
 
     ],

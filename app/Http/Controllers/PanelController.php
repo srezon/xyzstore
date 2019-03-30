@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Charts\WeeklyTransitionChart;
 use App\Customer;
 use App\Product;
 use App\Sale;
@@ -12,8 +13,6 @@ use App\Supplier;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Arr as Arr;
-
 
 class PanelController extends Controller
 {
@@ -32,20 +31,24 @@ class PanelController extends Controller
 //            return view('panel.home.home', ['categoryCount'=>$categoryCount]);
             //passing data with with method
 
-            $weeklyBuying = array_flatten($this->getWeeklyBuying());
-//            $weeklySelling = $this->getWeeklySelling()->toArray();
-//            return array_flatten($weeklyBuying->toArray());
-//            $weeklySellingArray = Arr::flatten($weeklySelling->toArray());
+//            $weeklyBuying = array_flatten($this->getWeeklyBuying());
+
 //            return $weeklyBuying;
 
-            return view('panel.home.home')
-                ->with('categoryCount', $categoryCount)
-                ->with('productCount', $productCount)
-                ->with('saleCount', $saleCount)
-                ->with('brandCount', $brandCount)
-                ->with('customerCount', $customerCount)
-                ->with('supplierCount', $supplierCount)
-                ->with('weeklyBuying', $weeklyBuying);
+            $weeklyBuying = new WeeklyTransitionChart();
+            $weeklyBuying->label(['one', 'two', 'three']);
+            $weeklyBuying->dataset('buying', 'line', [25,35,56]);
+
+            return view('panel.home.home', [
+                'categoryCount'=> $categoryCount,
+                'productCount'=> $productCount,
+                'saleCount'=> $saleCount,
+                'brandCount'=> $brandCount,
+                'customerCount'=> $customerCount,
+                'supplierCount'=> $supplierCount,
+                'weeklyBuying'=> $weeklyBuying,
+            ]);
+
         }
 
 //        Sir handled it with middleware https://www.youtube.com/watch?v=0bHy8O9GpFY&t=5939s (16:0)
