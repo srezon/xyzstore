@@ -117,8 +117,11 @@ class SaleController extends Controller
         ]);
 
         $thisProduct = Product::find($request->productID);
-        if ($thisProduct->productQuantity <= 0) {
+
+        if ($thisProduct->productQuantity < 1 ) {
             return redirect()->back()->withInput($request->all())->with('stockOut', 'This Product is out of stock');
+        } elseif ($thisProduct->productQuantity < $request->purchaseQuantity) {
+            return redirect()->back()->withInput($request->all())->with('stockOut', 'Unavailable stock');
         }
 
 
