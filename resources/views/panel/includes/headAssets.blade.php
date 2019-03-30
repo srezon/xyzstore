@@ -18,6 +18,8 @@
 
 <!-- DataTables files from https://datatables.net/manual/installation for table sorting -->
 <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.15/css/jquery.dataTables.css">
+<script src="{{asset('public/panel')}}/vendor/jquery/jquery.min.js"></script>
+
 <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.js"></script>
 {{--<link href="{{asset('public/panel')}}/vendor/datatables/media/css/dataTables.bootstrap.min.css" rel="stylesheet">--}}
 {{--<script src="{{asset('public/panel')}}/vendor/datatables/media/js/dataTables.bootstrap.js"></script>--}}
@@ -40,7 +42,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
 
 <!-- jQuery -->
-<script src="{{asset('public/panel')}}/vendor/jquery/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <!-- Bootstrap Core JavaScript -->

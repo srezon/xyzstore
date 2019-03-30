@@ -57,10 +57,10 @@
                     {{--<a href="{{ url('/products/view/'.$product->id) }}" class="btn btn-info" title="Product View">--}}
                     {{--<span class="glyphicon glyphicon-info-sign"></span>--}}
                     {{--</a>--}}
-                    <a href="{{ url('/product/edit/'.$product->id) }}" class="btn btn-success" title="Product Edit">
+                    <a href="{{ url('/product/edit/'.$product->id) }}" class="btn btn-success btn-xs" title="Product Edit">
                         <span class="glyphicon glyphicon-edit"></span>
                     </a>
-                    <a href="{{ url('/product/delete/'.$product->id) }}" title="Product Delete" class="btn btn-danger"
+                    <a href="{{ url('/product/delete/'.$product->id) }}" title="Product Delete" class="btn btn-danger btn-xs"
                        onclick="return confirm('Are you sure to delete this'); ">
                         <span class="glyphicon glyphicon-trash"></span>
                     </a>
