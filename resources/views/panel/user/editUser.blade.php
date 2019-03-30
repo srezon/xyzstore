@@ -50,9 +50,23 @@
                         <span class="text-danger">{{ $errors->has('address') ? $errors->first('address') : '' }}</span>
                     </div>
                 </div>
+                <!-- for password-->
+                <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                    <label for="password" class="col-md-2 control-label">Password</label>
+                    <div class="col-md-10">
+                        <input id="password" type="password" class="form-control" name="password" >
+                        @if ($errors->has('password'))
+                            <span class="help-block">
+                                        <strong>{{ $errors->first('password') }}</strong>
+                                    </span>
+                        @endif
+                    </div>
+                </div>
+                <!-- for password confirmation-->
+
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-success btn-block">Update</button>
+                        <button type="submit" class="btn btn-info btn-block">Update</button>
                     </div>
                 </div>
                 {!! Form::close() !!}

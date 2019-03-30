@@ -24,7 +24,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" name="btn" class="btn btn-success btn-block">Create Brand</button>
+                        <button type="submit" name="btn" class="btn btn-info btn-block">Create Brand</button>
                     </div>
                 </div>
                 {!! Form::close() !!}

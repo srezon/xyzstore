@@ -38,8 +38,8 @@ class PanelController extends Controller
 
             $chart = new PanelChart;
             $chart->labels($this->getLastSevenDays());
-            $chart->dataset('Buying', 'line', $this->getBuyingOfLastSevenDays())->backgroundcolor('rgba(92, 184, 92, 0.5)');
-            $chart->dataset('Selling', 'line', $this->getSellingOfLastSevenDays())->backgroundcolor('rgba(217, 83, 79, 0.5)');
+            $chart->dataset('Buying', 'line', $this->getBuyingOfLastSevenDays())->backgroundcolor('rgba(5, 127, 37, 0.5)');
+            $chart->dataset('Selling', 'line', $this->getSellingOfLastSevenDays())->backgroundcolor('rgba(186, 9, 9, 0.5)');
 
             return view('panel.home.home', compact(
                 'categoryCount' ,
