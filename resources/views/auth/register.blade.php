@@ -10,14 +10,23 @@
                         <form class="form-horizontal" role="form" method="POST" action="{{ route('register') }}">
                         {{ csrf_field() }}
 
+                            <div class="form-group">
+                                <label for="inputPassword3" class="col-md-4 control-label">Application Role</label>
+                                <div class="col-sm-6">
+                                    <select class="form-control" name="role_id" required>
+                                        <option value>Select Role</option>
+                                        <option value=1>Admin/Manager</option>
+                                        <option value=2>User/Employee</option>
+                                    </select>
+                                </div>
+                            </div>
+
                         <!-- for name-->
                             <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                                 <label for="name" class="col-md-4 control-label">Name</label>
-
                                 <div class="col-md-6">
                                     <input id="name" type="text" class="form-control" name="name"
                                            value="{{ old('name') }}" required autofocus>
-
                                     @if ($errors->has('name'))
                                         <span class="help-block">
                                         <strong>{{ $errors->first('name') }}</strong>
@@ -25,16 +34,14 @@
                                     @endif
                                 </div>
                             </div>
-                        
+
 
                             <!-- emailmail-->
                             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                                 <label for="email" class="col-md-4 control-label">E-Mail Address</label>
-
                                 <div class="col-md-6">
                                     <input id="email" type="email" class="form-control" name="email"
                                            value="{{ old('email') }}" required>
-
                                     @if ($errors->has('email'))
                                         <span class="help-block">
                                         <strong>{{ $errors->first('email') }}</strong>
@@ -46,11 +53,9 @@
                             <!-- for contact-->
                             <div class="form-group{{ $errors->has('contact') ? ' has-error' : '' }}">
                                 <label for="contact" class="col-md-4 control-label">Contact</label>
-
                                 <div class="col-md-6">
                                     <input id="contact" type="text" class="form-control" name="contact"
                                            value="{{ old('contact') }}" required autofocus>
-
                                     @if ($errors->has('contact'))
                                         <span class="help-block">
                                         <strong>{{ $errors->first('contact') }}</strong>
@@ -58,10 +63,11 @@
                                     @endif
                                 </div>
                             </div>
+
+
                             <!-- addressress-->
                             <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
                                 <label for="name" class="col-md-4 control-label">Address</label>
-
                                 <div class="col-md-6">
                                     {{--<input id="name" type="text" class="form-control" name="name"--}}
                                     {{--value="{{ old('name') }}" required autofocus>--}}
@@ -74,7 +80,6 @@
                                 </div>
                             </div>
                             <!-- for password-->
-
                             <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                                 <label for="password" class="col-md-4 control-label">Password</label>
                                 <div class="col-md-6">
