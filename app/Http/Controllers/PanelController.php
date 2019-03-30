@@ -12,7 +12,7 @@ use App\Supplier;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Arr as Arr;
+use App\Charts\PanelChart;
 
 
 class PanelController extends Controller
@@ -38,17 +38,37 @@ class PanelController extends Controller
 //            $weeklySellingArray = Arr::flatten($weeklySelling->toArray());
 //            return $weeklyBuying;
 
-            return view('panel.home.home')
-                ->with('categoryCount', $categoryCount)
-                ->with('productCount', $productCount)
-                ->with('saleCount', $saleCount)
-                ->with('brandCount', $brandCount)
-                ->with('customerCount', $customerCount)
-                ->with('supplierCount', $supplierCount)
-                ->with('weeklyBuying', $weeklyBuying);
+//            $chart = $this->getLastSevenDaysTransitionChart();
+//            return $chart;
+
+            $chart = new PanelChart;
+            $chart->labels(['One', 'Two', 'Three']);
+            $chart->dataset('My dataset 1', 'line', [1, 2, 3, 4]);
+            $chart->dataset('My dataset 2', 'line', [4, 3, 2, 1]);
+
+
+            return view('panel.home.home', compact(
+                'categoryCount' ,
+                'productCount' ,
+                'saleCount' ,
+                'brandCount' ,
+                'customerCount' ,
+                'supplierCount' ,
+                'weeklyBuying',
+                'chart'
+            ));
+
         }
 
 //        Sir handled it with middleware https://www.youtube.com/watch?v=0bHy8O9GpFY&t=5939s (16:0)
+    }
+
+    private function getLastSevenDaysTransitionChart()
+    {
+        $chart = new PanelChart;
+        $chart->labels(['One', 'Two', 'Three']);
+        $chart->dataset('My dataset 1', 'line', [1, 2, 3, 4]);
+        return $chart;
     }
 
 

@@ -51,6 +51,7 @@
 
 
 
+
 <!-- JS and Jquery start -->
 @include('panel.includes.footerAssets')
 <!-- JS and Jquery end -->
