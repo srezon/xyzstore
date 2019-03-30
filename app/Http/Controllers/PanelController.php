@@ -14,9 +14,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Charts\PanelChart;
 
-
 class PanelController extends Controller
 {
+    protected $product;
+
+    public function __construct(Product $product, Sale $sale)
+    {
+        $this->product = $product;
+        $this->sale = $sale;
+    }
+
     public function index()
     {
         if (Auth::guest()) {
@@ -66,8 +73,7 @@ class PanelController extends Controller
      */
     private function getBuyingOfLastSevenDays ()
     {
-        $products = new Product();
-        $prices = $products->select('productBuyingPrice as total')
+        $prices = $this->product->select('productBuyingPrice as total')
             ->whereBetween('created_at', [Carbon::now()->subDays(6), Carbon::now()->subDays(0)])
             ->orderBy('created_at', 'ASC')
             ->get();
@@ -80,8 +86,7 @@ class PanelController extends Controller
      */
     private function getSellingOfLastSevenDays ()
     {
-        $sales = new Sale();
-        $prices = $sales->select('totalBill as total')
+        $prices = $this->sale->select('totalBill as total')
             ->whereBetween('created_at', [Carbon::now()->subDays(6), Carbon::now()->subDays(0)])
             ->orderBy('created_at', 'ASC')
             ->get();
