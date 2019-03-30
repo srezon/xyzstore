@@ -1,5 +1,7 @@
 
 <link rel="icon" type="image/ico" href="public/favicon.ico">
+<!-- jQuery -->
+<script src="{{asset('public/panel')}}/vendor/jquery/jquery.min.js"></script>
 
 <!-- Custom CSS -->
 <link href="{{asset('public/panel/custom/styles.css')}}" rel="stylesheet">
@@ -39,9 +41,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
 
-<!-- jQuery -->
-<script src="{{asset('public/panel')}}/vendor/jquery/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+{{--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>--}}
 
 <!-- Bootstrap Core JavaScript -->
 <script src="{{asset('public/panel')}}/vendor/bootstrap/js/bootstrap.min.js"></script>
