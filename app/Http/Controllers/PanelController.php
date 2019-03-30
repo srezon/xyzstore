@@ -28,22 +28,8 @@ class PanelController extends Controller
             $brandCount = Brand::count();
             $customerCount = Customer::count();
             $supplierCount = Supplier::count();
-            //passing data with array method
-//            return view('panel.home.home', ['categoryCount'=>$categoryCount]);
-            //passing data with with method
-
-            $weeklyBuying = array_flatten($this->getWeeklyBuying());
-//            $weeklySelling = $this->getWeeklySelling()->toArray();
-//            return array_flatten($weeklyBuying->toArray());
-//            $weeklySellingArray = Arr::flatten($weeklySelling->toArray());
-//            return $weeklyBuying;
-
-//            $chart = $this->getLastSevenDaysTransitionChart();
-//            return $chart;
 
             $chart = new PanelChart;
-
-//            return array_flatten($days);
             $chart->labels($this->getLastSevenDays());
             $chart->dataset('Buying', 'line', [1, 2, 3, 4,2,3,4,4]);
             $chart->dataset('Selling', 'line', [2,3,5,4, 3, 2, 1]);
@@ -56,7 +42,6 @@ class PanelController extends Controller
                 'brandCount' ,
                 'customerCount' ,
                 'supplierCount' ,
-                'weeklyBuying',
                 'chart'
             ));
 
@@ -76,39 +61,6 @@ class PanelController extends Controller
             $days[$i] = Carbon::now()->subDays($i)->format('D');
         }
         return array_flatten($days);
-    }
-
-    private function getLastSevenDaysTransitionChart()
-    {
-        $chart = new PanelChart;
-        $chart->labels(['One', 'Two', 'Three']);
-        $chart->dataset('My dataset 1', 'line', [1, 2, 3, 4]);
-        return $chart;
-    }
-
-
-
-    private function getWeeklyBuying()
-    {
-        $products = new Product();
-        return $products
-            ->select('productBuyingPrice as total')
-            ->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
-            //where between = date start to date end
-            ->orderBy('created_at', 'ASC')
-            ->get()->toArray();
-
-        //where between = date start to date end
-
-    }
-
-    private function getWeeklySelling()
-    {
-        $sales = new Sale();
-        return $sales
-            ->select('totalBill as total')
-            ->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
-            ->get();
     }
 
 }
