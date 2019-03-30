@@ -123,8 +123,12 @@
 
     <div class="row">
         <div class="col-md-12">
-            {!! $chart->container() !!}
-
+            <div style="margin: 60px auto 30px;">
+                <h2 class="text-center" style="font-weight: bolder;">Transaction of last 7 days</h2>
+                <div>
+                    {!! $chart->container() !!}
+                </div>
+            </div>
         </div>
     </div>
 

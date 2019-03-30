@@ -42,9 +42,11 @@ class PanelController extends Controller
 //            return $chart;
 
             $chart = new PanelChart;
-            $chart->labels(['One', 'Two', 'Three']);
-            $chart->dataset('My dataset 1', 'line', [1, 2, 3, 4]);
-            $chart->dataset('My dataset 2', 'line', [4, 3, 2, 1]);
+
+//            return array_flatten($days);
+            $chart->labels($this->getLastSevenDays());
+            $chart->dataset('Buying', 'line', [1, 2, 3, 4,2,3,4,4]);
+            $chart->dataset('Selling', 'line', [2,3,5,4, 3, 2, 1]);
 
 
             return view('panel.home.home', compact(
@@ -61,6 +63,19 @@ class PanelController extends Controller
         }
 
 //        Sir handled it with middleware https://www.youtube.com/watch?v=0bHy8O9GpFY&t=5939s (16:0)
+    }
+
+    /**
+     * Get the last seven days
+     * only the name of the days
+     * @return array
+     */
+    private function getLastSevenDays() {
+        $days = [];
+        for ($i=1; $i<8; $i++) {
+            $days[$i] = Carbon::now()->subDays($i)->format('D');
+        }
+        return array_flatten($days);
     }
 
     private function getLastSevenDaysTransitionChart()
