@@ -28,8 +28,16 @@ class RegisterController extends Controller
     {
 //        return $request->all();
         $this->validator($request->all())->validate();
-
-        event(new Registered($user = $this->create($request->all())));
+        $data = [
+            'role_id' => $request->role_id,
+            'name' => $request->name,
+            'email' => $request->email,
+            'contact' => $request->contact,
+            'address' => $request->address,
+            'password' => \Hash::make($request->password)
+        ];
+        User::create($data);
+//        event(new Registered($user = $this->create($data)));
 
 //        $this->guard()->login($user);
 //        dd('sss');
