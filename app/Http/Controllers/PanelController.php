@@ -9,13 +9,23 @@ use App\Sale;
 use App\Brand;
 use App\Supplier;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use App\Charts\PanelChart;
 
 class PanelController extends Controller
 {
-    public function index(){
+    protected $product;
+
+    public function __construct(Product $product, Sale $sale)
+    {
+        $this->product = $product;
+        $this->sale = $sale;
+    }
+
+    public function index()
+    {
         if (Auth::guest()) {
             return view('panel.authentication.login');
         } else {
@@ -25,21 +35,63 @@ class PanelController extends Controller
             $brandCount = Brand::count();
             $customerCount = Customer::count();
             $supplierCount = Supplier::count();
-            //passing data with array method
-//            return view('panel.home.home', ['categoryCount'=>$categoryCount]);
-            //passing data with with method
-            return view('panel.home.home')
-                ->with('categoryCount', $categoryCount)
-                ->with('productCount', $productCount)
-                ->with('saleCount', $saleCount)
-                ->with('brandCount', $brandCount)
-                ->with('customerCount', $customerCount)
-                ->with('supplierCount', $supplierCount)
-                ;
+
+            $chart = new PanelChart;
+            $chart->labels($this->getLastSevenDays());
+            $chart->dataset('Buying', 'line', $this->getBuyingOfLastSevenDays())->backgroundcolor('rgba(92, 184, 92, 0.5)');
+            $chart->dataset('Selling', 'line', $this->getSellingOfLastSevenDays())->backgroundcolor('rgba(217, 83, 79, 0.5)');
+
+            return view('panel.home.home', compact(
+                'categoryCount' ,
+                'productCount' ,
+                'saleCount' ,
+                'brandCount' ,
+                'customerCount' ,
+                'supplierCount' ,
+                'chart'
+            ));
+
         }
-
-//        Sir handled it with middleware https://www.youtube.com/watch?v=0bHy8O9GpFY&t=5939s (16:0)
-
-
     }
+
+    /**
+     * Get the last seven days
+     * only the name of the days
+     * @return array
+     */
+    private function getLastSevenDays() {
+        $days = [];
+        for ($i=1; $i<8; $i++) {
+            $days[$i] = Carbon::now()->subDays($i)->format('D');
+        }
+        return array_flatten($days);
+    }
+
+    /**
+     * Data of last 7 days
+     * @return array
+     */
+    private function getBuyingOfLastSevenDays ()
+    {
+        $prices = $this->product->select('productBuyingPrice as total')
+            ->whereBetween('created_at', [Carbon::now()->subDays(6), Carbon::now()->subDays(0)])
+            ->orderBy('created_at', 'ASC')
+            ->get();
+        return array_flatten($prices->toArray());
+    }
+
+    /**
+     * Data of last 7 days
+     * @return array
+     */
+    private function getSellingOfLastSevenDays ()
+    {
+        $prices = $this->sale->select('totalBill as total')
+            ->whereBetween('created_at', [Carbon::now()->subDays(6), Carbon::now()->subDays(0)])
+            ->orderBy('created_at', 'ASC')
+            ->get();
+        return array_flatten($prices->toArray());
+    }
+
+
 }

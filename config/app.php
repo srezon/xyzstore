@@ -193,7 +193,7 @@ return [
 
         Barryvdh\Debugbar\ServiceProvider::class,
 
-
+        ConsoleTVs\Charts\ChartsServiceProvider::class,
 
     ],
 

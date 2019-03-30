@@ -123,74 +123,17 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div id="profitChart" style="width:100%; height:400px; margin: 90px auto;"></div>
+            <div style="margin: 60px auto 30px;">
+                <h2 class="text-center" style="font-weight: bolder;">Transaction of last 7 days</h2>
+                <div>
+                    {!! $chart->container() !!}
+                </div>
+            </div>
         </div>
     </div>
 
-    <script>
-        $(document).ready(function () {
-            //profit chart init
-            Highcharts.chart('profitChart', {
-                chart: {
-                    type: 'areaspline'
-                },
-                title: {
-                    text: 'Average Transition during one week'
-                },
-                legend: {
-                    layout: 'vertical',
-                    align: 'left',
-                    verticalAlign: 'top',
-                    x: 150,
-                    y: 100,
-                    floating: true,
-                    borderWidth: 1,
-                    backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor)
-                },
-                exporting: {enabled: false},
-                xAxis: {
-                    categories: [
-                        'Monday',
-                        'Tuesday',
-                        'Wednesday',
-                        'Thursday',
-                        'Friday',
-                        'Saturday',
-                        'Sunday'
-                    ],
-                    plotBands: [{ // visualize the weekend
-                        from: 4.5,
-                        to: 6.5,
-                        color: 'rgba(68, 170, 213, .2)'
-                    }]
-                },
-                yAxis: {
-                    title: {
-                        text: 'BDT(Taka)'
-                    }
-                },
-                tooltip: {
-                    shared: true,
-                    valueSuffix: ' BDT'
-                },
-                credits: {
-                    enabled: false
-                },
-                plotOptions: {
-                    areaspline: {
-                        fillOpacity: 0.5
-                    }
-                },
-                series: [{
-                    name: 'Expenditure',
-                    data: [3000, 4000, 3000, 5000, 4000, 10000, 10002]
-                }, {
-                    name: 'Earnings',
-                    data: [1000, 3000, 4000, 3000, 3000, 5000, 4000]
-                }]
-            });
-        });
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js" charset="utf-8"></script>
+    {!! $chart->script() !!}
 
 @endsection
 
