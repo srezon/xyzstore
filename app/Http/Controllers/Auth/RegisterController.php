@@ -36,7 +36,8 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+//        To enable registration page for logged in user, comment out the following
+//        $this->middleware('guest', ['except' => 'getLogout']);
     }
 
     /**

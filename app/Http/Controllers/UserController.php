@@ -36,14 +36,24 @@ class UserController extends Controller
 
     public function editUser($id)
     {
-         $user = User::find($id);
+        $user = User::find($id);
         return view('panel.user.editUser')->with('user', $user);
     }
 
     public function update(Request $request)
     {
-        $user = new User();
-        $user->find($request->id)->fill($request->all())->save();
+//        return $request->all();
+//        $user = new User();
+//        $user->find($request->id)->fill($request->all())->save();
+
+        $user = User::find($request->id);
+        $user->role_id = $request->role_id;
+        $user->name = $request->name;
+        $user->contact = $request->contact;
+        $user->email = $request->email;
+        $user->address = $request->address;
+        $user->save();
+
         return redirect()->back()->with('msg', 'User record updated successfully.');
     }
 }
