@@ -61,7 +61,7 @@ class PanelController extends Controller
      */
     private function getLastSevenDays() {
         $days = [];
-        for ($i=1; $i<8; $i++) {
+        for ($i=0; $i<7; $i++) {
             $days[$i] = Carbon::now()->subDays($i)->format('D');
         }
         return array_flatten($days);
