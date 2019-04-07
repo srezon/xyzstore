@@ -67,8 +67,15 @@ class CustomerController extends Controller
             ->select('customers.id', 'customers.firstName', 'customers.lastName', 'customers.phoneNumber', 'customers.email', 'customers.address', DB::raw('IFNULL(SUM(sales.purchaseQuantity), 0) as totalProductsBought'), DB::raw('IFNULL(SUM(sales.totalBill), 0) as totalPurchasedBDT'))
             ->groupBy('customers.id', 'customers.firstName', 'customers.lastName', 'customers.phoneNumber', 'customers.email', 'customers.address')
             ->where('phoneNumber', $id)->first();
+
+        $products = Product::all();
+        $productsArray = [];
+        foreach ($products as $product) {
+            $productsArray[$product->id] = $product->id . ' - ' . $product->productName . ' - TK' . $product->productSellingPrice . ' - Quantity: ' . $product->productQuantity;
+        }
         return view('panel.customer.sellToCustomer')
-            ->with('customerByPhone', $customerByPhone);
+            ->with('customerByPhone', $customerByPhone)
+            ->with('productsArray', $productsArray);
     }
 
     public function editCustomer($id)

@@ -1,22 +1,5 @@
 @extends('panel.master')
 @section('content')
-    <hr/>
-    <div class="container">
-        <div class="col-lg-11">
-            {!! Form::open( [ 'url'=>'sale/do/', 'method' =>'get', 'class' =>'form-horizontal', 'role'=>'search' ] ) !!}
-            <div class="input-group add-on form-group">
-                <input class="form-control" placeholder="Enter Product ID to find it..." name="productID" id="srch-term"
-                       type="number">
-                <input class="form-control" placeholder="Enter Customer ID to find them..." name="customerPhone"
-                       id="srch-term"
-                       type="number">
-                <div class="input-group-btn">
-                    <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-                </div>
-            </div>
-            {!! Form::close()!!}
-        </div>
-    </div>
     @if(isset($productByID))
         <br>
         <h3 class="text text-success">Product Information</h3>

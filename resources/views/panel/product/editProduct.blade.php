@@ -10,7 +10,6 @@
                 @else
                     {{$editMsg}}
                 @endif
-
             </h3>
             <hr/>
             <div class="well">
