@@ -13,6 +13,9 @@ class ProductController extends Controller
 {
     public function newProduct()
     {
+        if (\Auth::user()->role_id == 2) {
+            return view('panel.user.noAccess');
+        }
 //        $categories = Category::where('publicationStatus', 1)->get();
         $categories = Category::all();
         $brands = Brand::all();
@@ -22,6 +25,9 @@ class ProductController extends Controller
 
     public function saveProduct(Request $request)
     {
+        if (\Auth::user()->role_id == 2) {
+            return view('panel.user.noAccess');
+        }
 //        return $request->productName;
 //        return $request->all();
         //validation
@@ -50,6 +56,10 @@ class ProductController extends Controller
 
     public function editProduct($id)
     {
+        if (\Auth::user()->role_id == 2) {
+            return view('panel.user.noAccess');
+        }
+
         $productByID = Product::where('id', $id)->first();
 //        $categories = Category::where('publicationStatus', 1)->get();
         $categories = Category::all();
@@ -72,6 +82,9 @@ class ProductController extends Controller
 
     public function updateProduct(Request $request)
     {
+        if (\Auth::user()->role_id == 2) {
+            return view('panel.user.noAccess');
+        }
 //validation
         $this->validate($request, [
             'productName' => 'required',

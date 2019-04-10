@@ -10,11 +10,18 @@ class BrandController extends Controller
 {
     public function newBrand()
     {
+        if (\Auth::user()->role_id == 2) {
+            return view('panel.user.noAccess');
+        }
         return view('panel.brand.newBrand');
     }
 
     public function saveBrand(Request $request)
     {
+        if (\Auth::user()->role_id == 2) {
+            return view('panel.user.noAccess');
+        }
+
         $this->validate($request, [
             'brandName' => 'required'
 
@@ -37,8 +44,9 @@ class BrandController extends Controller
 
     public function editBrand($id)
     {
-
-
+        if (\Auth::user()->role_id == 2) {
+            return view('panel.user.noAccess');
+        }
         $brandByID = Brand::where('id', $id)->first();
         return view('panel.brand.editBrand')
             ->with('brandByID', $brandByID)
@@ -47,6 +55,9 @@ class BrandController extends Controller
 
     public function updateBrand(Request $request)
     {
+        if (\Auth::user()->role_id == 2) {
+            return view('panel.user.noAccess');
+        }
         $brandByID = Brand::find($request->id);
         $brandByID->brandName = $request->brandName;
         $brandByID->brandNotes = $request->brandNotes;

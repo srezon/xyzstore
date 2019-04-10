@@ -31,17 +31,26 @@ class UserController extends Controller
 
     public function newUser()
     {
+        if (\Auth::user()->role_id == 2) {
+            return view('panel.user.noAccess');
+        }
         return redirect('/register');
     }
 
     public function editUser($id)
     {
+        if (\Auth::user()->role_id == 2) {
+            return view('panel.user.noAccess');
+        }
         $user = User::find($id);
         return view('panel.user.editUser')->with('user', $user);
     }
 
     public function update(Request $request)
     {
+        if (\Auth::user()->role_id == 2) {
+            return view('panel.user.noAccess');
+        }
 //        return $request->all();
 //        $user = new User();
 //        $user->find($request->id)->fill($request->all())->save();

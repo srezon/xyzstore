@@ -28,6 +28,9 @@ class SupplierController extends Controller
      */
     public function create(Request $request)
     {
+        if (\Auth::user()->role_id == 2) {
+            return view('panel.user.noAccess');
+        }
         $brands = Brand::doesntHave('supplier')->get();
         return view('panel.supplier.newSupplier')->with('brands', $brands)->with('addMsg', 'Add new Supplier:');
     }
@@ -40,6 +43,9 @@ class SupplierController extends Controller
      */
     public function store(Request $request)
     {
+        if (\Auth::user()->role_id == 2) {
+            return view('panel.user.noAccess');
+        }
         $this->validate($request, [
             'supplierName' => 'required',
             'supplierPhone' => 'required',
@@ -79,6 +85,9 @@ class SupplierController extends Controller
      */
     public function edit($id)
     {
+        if (\Auth::user()->role_id == 2) {
+            return view('panel.user.noAccess');
+        }
         $supplier = Supplier::find($id);
         $brand = Brand::find($supplier->brand_id);
 
@@ -99,6 +108,9 @@ class SupplierController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (\Auth::user()->role_id == 2) {
+            return view('panel.user.noAccess');
+        }
         $supplier = new Supplier();
         $supplier->find($id)->fill($request->all())->save();
         return view('panel.supplier.viewSuppliers')->with('successMsg', "Supplier has been updated!")->with('suppliers', $supplier->all());

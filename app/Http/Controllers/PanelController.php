@@ -26,6 +26,8 @@ class PanelController extends Controller
 
     public function index()
     {
+
+//        return 'sss';
         if (Auth::guest()) {
             return view('panel.authentication.login');
         } else {

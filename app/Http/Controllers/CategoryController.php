@@ -11,12 +11,18 @@ class CategoryController extends Controller
 {
     public function newCategory()
     {
+        if (\Auth::user()->role_id == 2) {
+            return view('panel.user.noAccess');
+        }
         return view('panel.category.newCategory');
     }
 
     //in following, Request is a class and $request is an object.
     public function saveCategory(Request $request)
     {
+        if (\Auth::user()->role_id == 2) {
+            return view('panel.user.noAccess');
+        }
         $this->validate($request, [
             'categoryName' => 'required',
             'categoryDescription' => 'required',
@@ -69,6 +75,9 @@ class CategoryController extends Controller
 
     public function updateCategory(Request $request)
     {
+        if (\Auth::user()->role_id == 2) {
+            return view('panel.user.noAccess');
+        }
         // return "Hello";
         $category = Category::find($request->categoryId);
         $category->categoryName = $request->categoryName;
@@ -94,6 +103,9 @@ class CategoryController extends Controller
 
     public function deleteCategory($id)
     {
+        if (\Auth::user()->role_id == 2) {
+            return view('panel.user.noAccess');
+        }
         $category = Category::find($id);
         $category->delete();
         return redirect('/categories/')->with('message', 'Category deleted successfully');
