@@ -93,9 +93,17 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="col-sm-2 control-label">Discount(%)</label>
+                        <div class="col-sm-10">
+                            <input type="number" value="" class="form-control"
+                                   name="discount" min="0" max="100">
+                            <span class="text-danger">{{ $errors->has('discount') ? $errors->first('discount') : '' }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label for="inputEmail3" class="col-sm-2 control-label">Quantity</label>
                         <div class="col-sm-10">
-                            <input type="number" value="1" class="form-control" name="purchaseQuantity">
+                            <input type="number" value="1" class="form-control" name="purchaseQuantity" min="1" max="{{$productByID->productQuantity + 1}}">
                             <span class="text-danger">{{ $errors->has('purchaseQuantity') ? $errors->first('purchaseQuantity') : '' }}</span>
                         </div>
                     </div>
