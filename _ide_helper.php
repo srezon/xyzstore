@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.4.36 on 2019-03-30 11:10:25.
+ * Generated for Laravel 5.4.36 on 2019-04-10 05:18:35.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -7545,7 +7545,7 @@ namespace Illuminate\Support\Facades {
          *  * $default
          *
          * @param string|null $default The default format
-         * @return string The request format
+         * @return string|null The request format
          * @static 
          */ 
         public static function getRequestFormat($default = 'html')
