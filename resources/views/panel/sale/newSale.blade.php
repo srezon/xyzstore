@@ -85,7 +85,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">Price per Unit</label>
+                        <label class="col-sm-2 control-label">Price Per Unit</label>
                         <div class="col-sm-10">
                             <input type="number" value="{{ $productByID->productSellingPrice }}" class="form-control"
                                    name="pricePerUnit" readonly>
@@ -93,10 +93,10 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">Discount(%)</label>
+                        <label class="col-sm-2 control-label">Discount(%) Per Unit</label>
                         <div class="col-sm-10">
                             <input type="number" value="" class="form-control"
-                                   name="discount" min="0" max="100">
+                                   name="discount_percentage_per_unit" min="0" max="100">
                             <span class="text-danger">{{ $errors->has('discount') ? $errors->first('discount') : '' }}</span>
                         </div>
                     </div>

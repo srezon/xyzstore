@@ -25,6 +25,7 @@ class SaleController extends Controller
 
     protected static $weekStartsAt = self::SATURDAY;
     protected static $weekEndsAt = self::FRIDAY;
+
     public function newSale()
     {
 
@@ -38,7 +39,7 @@ class SaleController extends Controller
         //return request->id;
         //retrieve specific product of received ID
         $productId = $request->productId;
-         $productByID = Product::find($productId);
+        $productByID = Product::find($productId);
         //retrieve category name from category ID
         if (!empty($productByID)) {
             $categoryID = $productByID->productCategoryID;
@@ -105,6 +106,7 @@ class SaleController extends Controller
 
     public function saveSale(Request $request)
     {
+//        return $request->all();
         //validation
         $this->validate($request, [
             'customerName' => 'required',
@@ -118,7 +120,7 @@ class SaleController extends Controller
 
         $thisProduct = Product::find($request->productID);
 
-        if ($thisProduct->productQuantity < 1 ) {
+        if ($thisProduct->productQuantity < 1) {
             return redirect()->back()->withInput($request->all())->with('stockOut', 'This Product is out of stock');
         } elseif ($thisProduct->productQuantity < $request->purchaseQuantity) {
             return redirect()->back()->withInput($request->all())->with('stockOut', 'Unavailable stock');
@@ -131,6 +133,16 @@ class SaleController extends Controller
             ->where('isProductAssigned', '=', 0)
             ->get();
 
+//saving to sales table
+        if ($request->has('discount_percentage_per_unit')) {
+            if ($request->get('discount_percentage_per_unit') > 0) {
+                $finalPricePerUnit = $request->pricePerUnit - ($request->pricePerUnit * ($request->discount_percentage_per_unit / 100));
+            } else {
+                $finalPricePerUnit = $request->pricePerUnit;
+            }
+        } else {
+            $finalPricePerUnit = $request->pricePerUnit;
+        }
 
         if ($isOldInvoice == []) {
             //new invoice
@@ -141,13 +153,15 @@ class SaleController extends Controller
             $invoice->delivered = 0;
             $invoice->save();
 
-            //saving to sales table
+
             $sale = new Sale();
             $sale->customerID = $request->customerID;
             $sale->productID = $request->productID;
             $sale->invoicesInvoiceCode = $request->invoiceCode;//$request->invoiceCode
             $sale->purchaseQuantity = $request->purchaseQuantity;
-            $sale->totalBill = ($request->pricePerUnit) * ($request->purchaseQuantity);
+            $sale->totalBill = $finalPricePerUnit * ($request->purchaseQuantity);
+            $sale->discount_percentage_per_unit = $request->discount_percentage_per_unit;
+
             $sale->save();
 
             //update product quantity
@@ -175,7 +189,7 @@ class SaleController extends Controller
             $sale->productID = $request->productID;
             $sale->invoicesInvoiceCode = $request->invoiceCode;//$request->invoiceCode
             $sale->purchaseQuantity = $request->purchaseQuantity;
-            $sale->totalBill = ($request->pricePerUnit) * ($request->purchaseQuantity);
+            $sale->totalBill = $finalPricePerUnit * ($request->purchaseQuantity);
             $sale->save();
 
             //update product quantity

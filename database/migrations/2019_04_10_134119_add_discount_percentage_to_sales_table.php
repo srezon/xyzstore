@@ -14,7 +14,7 @@ class AddDiscountPercentageToSalesTable extends Migration
     public function up()
     {
         Schema::table('sales', function (Blueprint $table) {
-            $table->unsignedTinyInteger('discount_percentage')->default(0);
+            $table->unsignedTinyInteger('discount_percentage_per_unit')->default(0);
         });
     }
 
