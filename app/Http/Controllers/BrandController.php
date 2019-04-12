@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Supplier;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use App\Brand;
 use App\Product;
+
 class BrandController extends Controller
 {
     public function newBrand()
@@ -53,6 +55,21 @@ class BrandController extends Controller
             ->with('Msg', 'Edit this Brand:');
     }
 
+    public function deleteBrand($id)
+    {
+        if (\Auth::user()->role_id == 2) {
+            return view('panel.user.noAccess');
+        }
+
+        if (Product::where('productBrandID', $id)->exists() or Supplier::where('brand_id', $id)->exists()) {
+            return redirect('/brands/')->with('message', 'This Brand has Product and/or Suppliers, and cannot be deleted');
+        }else{
+            Brand::destroy($id);
+            return redirect('/brands/')->with('message', 'The Brand has been deleted!');
+        }
+
+    }
+
     public function updateBrand(Request $request)
     {
         if (\Auth::user()->role_id == 2) {
@@ -65,7 +82,8 @@ class BrandController extends Controller
         return redirect('/brands/')->with('successMsg', 'Brand Updated Successfully!');
     }
 
-    public function productsByBrand($id){
+    public function productsByBrand($id)
+    {
         $productBrand = Brand::where('id', $id)->first();
         $productsByBrand = Product::where('productBrandID', $id)
             ->leftJoin('categories', 'products.productCategoryID', '=', 'categories.id')

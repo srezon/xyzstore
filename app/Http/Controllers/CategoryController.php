@@ -106,9 +106,13 @@ class CategoryController extends Controller
         if (\Auth::user()->role_id == 2) {
             return view('panel.user.noAccess');
         }
-        $category = Category::find($id);
-        $category->delete();
-        return redirect('/categories/')->with('message', 'Category deleted successfully');
+
+        if (Product::where('productCategoryID', $id)->exists()) {
+            return redirect('/categories/')->with('message', 'This Category has Product and cannot be deleted');
+        }else{
+            Category::destroy($id);
+            return redirect('/categories/')->with('message', 'The Category has been deleted!');
+        }
     }
 
 }
