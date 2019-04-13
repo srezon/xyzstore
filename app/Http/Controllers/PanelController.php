@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Charts\PanelChart;
+use DB;
 
 class PanelController extends Controller
 {
@@ -36,10 +37,19 @@ class PanelController extends Controller
             $customerCount = Customer::count();
             $supplierCount = Supplier::count();
 
+
+//            return $this->product->selectRaw('CAST(created_at as date)')
+//                ->whereBetween('created_at',
+//                    [Carbon::now()->subDays(7)->toDateTimeString(), Carbon::tomorrow()->toDateTimeString()])
+//                ->selectRaw('ROUND(SUM(productBuyingPrice)) as total')
+//                ->groupBy('created_at as date')
+//                ->get();
+
+//            return DB::select('select CAST(created_at as date ) from products where date between');
+
             $chart = new PanelChart;
             $chart->labels(array_reverse($this->getLastSevenDays()));
-            $chart->dataset('Buying', 'line', $this->getTransactionOfLastSevenDays($this->product, 'productBuyingPrice'))->backgroundcolor
-            ('rgba(5, 127, 37, 0.5)');
+            $chart->dataset('Buying', 'line', $this->getBuyingOfLastSevenDays())->backgroundcolor('rgba(5, 127, 37, 0.5)');
             $chart->dataset('Selling', 'line', $this->getTransactionOfLastSevenDays($this->sale, 'totalBill'))->backgroundcolor('rgba(186, 9, 9, 0.5)');
 
             return view('panel.home.home', compact(
@@ -53,6 +63,11 @@ class PanelController extends Controller
             ));
 
         }
+    }
+
+    public function getSevenDaysTransaction()
+    {
+
     }
 
     /**
@@ -77,9 +92,8 @@ class PanelController extends Controller
      */
     public function getTransactionOfLastSevenDays($model, $key)
     {
-        $prices = $model->whereBetween('created_at', [Carbon::now()->subDays(7)->toDateTimeString(), Carbon::tomorrow()
-            ->toDateTimeString()])
-            ->selectRaw('SUM('.$key.') as total')
+        $prices = $model->whereBetween('created_at', [Carbon::now()->subDays(7)->toDateTimeString(), Carbon::tomorrow()->toDateTimeString()])
+            ->selectRaw('SUM(' . $key . ') as total')
             ->groupBy('created_at')
             ->orderBy('created_at', 'ASC')
             ->get();
@@ -92,12 +106,14 @@ class PanelController extends Controller
      */
     private function getBuyingOfLastSevenDays()
     {
-        $prices = $this->product->whereBetween('created_at', [Carbon::now()->subDays(6)->toDateTimeString(), Carbon::today()->toDateTimeString()])
-            ->select(DB::raw('SUM(productBuyingPrice) as total'))
+        $prices = $this->product->whereBetween('created_at', [Carbon::now()->subDays(7)->toDateTimeString(),
+            Carbon::tomorrow()->toDateTimeString()])
             ->groupBy('created_at')
-            ->orderBy('created_at', 'asc')
+            ->selectRaw('SUM(productBuyingPrice) as total')
+//            ->orderBy('created_at', 'ASC')
             ->get();
-        return array_flatten($prices->toArray());
+//        return array_flatten($prices->toArray());
+        return $prices->toArray();
     }
 
     /**
