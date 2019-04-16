@@ -32,6 +32,7 @@ class PanelController extends Controller
         if (Auth::guest()) {
             return view('panel.authentication.login');
         } else {
+
             $categoryCount = Category::count();
             $productCount = Product::count();
             $saleCount = Sale::count();

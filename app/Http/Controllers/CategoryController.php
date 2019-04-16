@@ -67,6 +67,9 @@ class CategoryController extends Controller
 
     public function editCategory($id)
     {
+        if (\Auth::user()->role_id == 2) {
+            return view('panel.user.noAccess');
+        }
         // return "Hello";
         $categoryByID = Category::where('id', $id)->first();
 
