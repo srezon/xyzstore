@@ -10,10 +10,8 @@ use App\Brand;
 use App\Supplier;
 
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Charts\PanelChart;
-use DB;
 
 class PanelController extends Controller
 {
@@ -37,20 +35,12 @@ class PanelController extends Controller
             $customerCount = Customer::count();
             $supplierCount = Supplier::count();
 
-
-//            return $this->product->selectRaw('CAST(created_at as date)')
-//                ->whereBetween('created_at',
-//                    [Carbon::now()->subDays(7)->toDateTimeString(), Carbon::tomorrow()->toDateTimeString()])
-//                ->selectRaw('ROUND(SUM(productBuyingPrice)) as total')
-//                ->groupBy('created_at as date')
-//                ->get();
-
-//            return DB::select('select CAST(created_at as date ) from products where date between');
-
             $chart = new PanelChart;
-            $chart->labels(array_reverse($this->getLastSevenDays()));
-            $chart->dataset('Buying', 'line', $this->getBuyingOfLastSevenDays())->backgroundcolor('rgba(5, 127, 37, 0.5)');
-            $chart->dataset('Selling', 'line', $this->getTransactionOfLastSevenDays($this->sale, 'totalBill'))->backgroundcolor('rgba(186, 9, 9, 0.5)');
+            $chart->labels($this->getLastSevenDays());
+            $chart->dataset('Buying', 'line', $this->getTransactionData($this->product,'productBuyingPrice', 7))
+                ->backgroundcolor('rgba(5, 127, 37, 0.5)');
+            $chart->dataset('Selling', 'line', $this->getTransactionData($this->sale, 'totalBill', 7))->backgroundcolor
+            ('rgba(186, 9, 9, 0.5)');
 
             return view('panel.home.home', compact(
                 'categoryCount',
@@ -63,11 +53,6 @@ class PanelController extends Controller
             ));
 
         }
-    }
-
-    public function getSevenDaysTransaction()
-    {
-
     }
 
     /**
@@ -85,49 +70,28 @@ class PanelController extends Controller
     }
 
     /**
-     * Last 7 days transaction
-     * @param $model
-     * @param $key
+     * This method will go through the bookings records
+     * sum off the each days amount to total
+     * if no transaction it will take 0 as replacement of null
+     *
+     * @param $days
      * @return array
      */
-    public function getTransactionOfLastSevenDays($model, $key)
-    {
-        $prices = $model->whereBetween('created_at', [Carbon::now()->subDays(7)->toDateTimeString(), Carbon::tomorrow()->toDateTimeString()])
-            ->selectRaw('SUM(' . $key . ') as total')
-            ->groupBy('created_at')
-            ->orderBy('created_at', 'ASC')
-            ->get();
-        return array_flatten($prices->toArray());
+    private function getTransactionData($model, $key, $days) {
+        //vars
+        $transactions = [];
+        //Loop
+        for ($i=0; $i<$days; $i++) {
+            $transactions[] = $model->whereBetween('created_at', [
+                Carbon::now()->subDays($i)->startOfDay()->toDateTimeString(),
+                Carbon::now()->subDays($i)->endOfDay()->toDateTimeString()
+            ])
+                ->selectRaw('COALESCE(SUM('.$key.'), 0) as total')
+                ->get()
+                ->toArray();
+        }
+        //returns
+        return array_flatten($transactions);
     }
-
-    /**
-     * Data of last 7 days
-     * @return array
-     */
-    private function getBuyingOfLastSevenDays()
-    {
-        $prices = $this->product->whereBetween('created_at', [Carbon::now()->subDays(7)->toDateTimeString(),
-            Carbon::tomorrow()->toDateTimeString()])
-            ->groupBy('created_at')
-            ->selectRaw('SUM(productBuyingPrice) as total')
-//            ->orderBy('created_at', 'ASC')
-            ->get();
-//        return array_flatten($prices->toArray());
-        return $prices->toArray();
-    }
-
-    /**
-     * Data of last 7 days
-     * @return array
-     */
-    private function getSellingOfLastSevenDays()
-    {
-        $prices = $this->sale->select('totalBill as total')
-            ->whereBetween('created_at', [Carbon::now()->subDays(6), Carbon::now()->subDays(0)])
-            ->orderBy('created_at', 'ASC')
-            ->get();
-        return array_flatten($prices->toArray());
-    }
-
 
 }
