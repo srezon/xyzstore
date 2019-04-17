@@ -12,6 +12,7 @@
         </ul>
     </div>
     <hr/>
+    @include('panel.sale.profitLoss')
     <h3 class="text-center text-success">
         @if(Session::get('successMessage'))
             {{Session::get('successMessage')}}

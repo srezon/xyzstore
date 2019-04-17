@@ -686,7 +686,12 @@ class SaleController extends Controller
         $totalProfit = $totalSaleCost[0]->totalBill - $totalCost[0]->totalCost;
 
         //finding profit percentage
-        $profitPercentage = round(($totalProfit * 100) / $totalCost[0]->totalCost);
+        if ($totalCost[0]->totalCost != 0){
+            $profitPercentage = round(($totalProfit * 100) / $totalCost[0]->totalCost);
+        }else{
+            $profitPercentage = 0;
+        }
+
 //        $profitPercentage = round(($totalProfit / $totalCost[0]->totalCost ) * 100);
 
         $topCustomersByExpense = DB::table('customers')
