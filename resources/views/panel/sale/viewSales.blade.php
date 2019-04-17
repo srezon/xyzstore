@@ -12,6 +12,7 @@
         </ul>
     </div>
     <hr/>
+    @include('panel.sale.profitLoss')
     <h3 class="text-center text-success">
         @if(Session::get('successMessage'))
             {{Session::get('successMessage')}}
@@ -19,6 +20,8 @@
             Records of Sales
         @endif</h3>
     <hr/>
+
+
     <div class="table-responsive">
         <table class="table table-bordered table-hover">
             <thead>

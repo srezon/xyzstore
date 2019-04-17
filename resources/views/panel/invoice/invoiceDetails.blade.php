@@ -130,11 +130,12 @@
                             <tbody>
                             <tr>
                                 <td>
-                                    DCIT Ltd.<br>
-                                    Floor #9, House #34, Sonargaon Janapath <br>
-                                    Sector #11, Uttara <br>
-                                    Dhaka 1230, Bangladesh <br>
-                                    +8801711983015
+                                    RAPID IT.<br>
+                                    Suite-4F, 4Th Floor, Meherba Plaza
+                                     <br>
+                                    33 Topkhana Road <br>
+                                    Dhaka, Bangladesh <br>
+                                    +8801670249057
                                 </td>
 
                                 <td>Customer:<br>
@@ -152,6 +153,7 @@
                     <td>Item(s)</td>
                     <td>Price per Unit</td>
                     <td>Quantity</td>
+                    <td>Per Item Discount</td>
                     <td>Sub Total</td>
                 </tr>
                 @foreach($invoiceByCode as $productsOfInvoice)
@@ -159,24 +161,12 @@
                         <td>{{$productsOfInvoice->productName. ' '.$productsOfInvoice->productModel }}</td>
                         <td>TK. {{ $productsOfInvoice->productSellingPrice }}</td>
                         <td>{{'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.$productsOfInvoice->purchaseQuantity }}</td>
-                        <td>TK. {{ $productsOfInvoice->totalBill }}</td>
+                        <td>{{'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.$productsOfInvoice->discount_percentage_per_unit }} %</td>
+                        <td align="right" >TK. {{ $productsOfInvoice->totalBill }}</td>
                     </tr>
                 @endforeach
                 <tr class="total">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td><b>Total: {{$fullTotalBill->fullTotalBill}}</b>
-
-                    </td>
-                </tr>
-                <tr class="total">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>
-
-
+                    <td colspan="5" align="right" ><b>Total: Tk. {{$fullTotalBill->fullTotalBill}} </b>
                     </td>
                 </tr>
                 </tbody>

@@ -35,8 +35,8 @@ class InvoiceController extends Controller
             ->leftJoin('customers', 'customers.id', 'invoices.customerID')
             ->leftJoin('products', 'products.id', 'sales.productID')
             ->where('invoices.invoiceCode', $id)
-            ->select('invoices.invoiceCode', 'invoices.updated_at', 'customers.email', 'customers.firstName', 'customers.phoneNumber', 'customers.lastName', 'products.productName', 'products.productModel', 'sales.purchaseQuantity', 'products.productSellingPrice',DB::raw('(CASE WHEN invoices.delivered = 1 THEN "Delivered" ELSE "Not Delivered (Print to Deliver or Sell More)" END) AS delivered'), DB::raw('SUM(sales.totalBill) as totalBill'))
-            ->groupBy('invoices.invoiceCode', 'invoices.updated_at', 'customers.firstName', 'customers.email', 'customers.lastName', 'products.productName', 'products.productModel', 'sales.purchaseQuantity', 'products.productSellingPrice', 'customers.phoneNumber', 'invoices.delivered')
+            ->select('invoices.invoiceCode', 'invoices.updated_at', 'customers.email', 'customers.firstName', 'customers.phoneNumber', 'customers.lastName', 'products.productName', 'products.productModel', 'sales.purchaseQuantity', 'products.productSellingPrice', 'sales.discount_percentage_per_unit', DB::raw('(CASE WHEN invoices.delivered = 1 THEN "Delivered" ELSE "Not Delivered (Print to Deliver or Sell More)" END) AS delivered'), DB::raw('SUM(sales.totalBill) as totalBill'))
+            ->groupBy('invoices.invoiceCode', 'invoices.updated_at', 'customers.firstName', 'customers.email', 'customers.lastName', 'products.productName', 'products.productModel', 'sales.purchaseQuantity', 'products.productSellingPrice', 'customers.phoneNumber', 'invoices.delivered', 'sales.discount_percentage_per_unit')
             ->get();
 
         $fullTotalBill = DB::table('invoices')

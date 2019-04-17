@@ -28,8 +28,8 @@
         @foreach($brands as $brand)
             <tr>
                 <th scope="row">{{$brand->id}}</th>
-                <td><a class="link2"
-                       href="{{ url('/brand/'.$brand->id) }}">{{$brand->brandName}}</a>
+                <td>
+                       {{$brand->brandName}}
                 </td>
                 <td>{{$brand->brandNotes}}</td>
                 <td>

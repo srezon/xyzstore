@@ -19,8 +19,7 @@
         @foreach($categories as $category)
             <tr>
                 <th scope="row">{{$category->id}}</th>
-                <td><a class="link2" href="{{ url('/category/'.$category->id) }}">{{$category->categoryName}}</a></td>
-
+                <td>{{$category->categoryName}}</td>
                 <td>{{$category->categoryDescription}}</td>
                 {{--<td>{{$category->publicationStatus == 1 ? 'Published' : 'Unpublished'}}</td>--}}
                 <td>

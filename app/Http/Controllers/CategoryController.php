@@ -11,12 +11,18 @@ class CategoryController extends Controller
 {
     public function newCategory()
     {
+        if (\Auth::user()->role_id == 2) {
+            return view('panel.user.noAccess');
+        }
         return view('panel.category.newCategory');
     }
 
     //in following, Request is a class and $request is an object.
     public function saveCategory(Request $request)
     {
+        if (\Auth::user()->role_id == 2) {
+            return view('panel.user.noAccess');
+        }
         $this->validate($request, [
             'categoryName' => 'required',
             'categoryDescription' => 'required',
@@ -61,6 +67,9 @@ class CategoryController extends Controller
 
     public function editCategory($id)
     {
+        if (\Auth::user()->role_id == 2) {
+            return view('panel.user.noAccess');
+        }
         // return "Hello";
         $categoryByID = Category::where('id', $id)->first();
 
@@ -69,6 +78,9 @@ class CategoryController extends Controller
 
     public function updateCategory(Request $request)
     {
+        if (\Auth::user()->role_id == 2) {
+            return view('panel.user.noAccess');
+        }
         // return "Hello";
         $category = Category::find($request->categoryId);
         $category->categoryName = $request->categoryName;
@@ -94,9 +106,16 @@ class CategoryController extends Controller
 
     public function deleteCategory($id)
     {
-        $category = Category::find($id);
-        $category->delete();
-        return redirect('/categories/')->with('message', 'Category deleted successfully');
+        if (\Auth::user()->role_id == 2) {
+            return view('panel.user.noAccess');
+        }
+
+        if (Product::where('productCategoryID', $id)->exists()) {
+            return redirect('/categories/')->with('message', 'This Category has Product and cannot be deleted');
+        }else{
+            Category::destroy($id);
+            return redirect('/categories/')->with('message', 'The Category has been deleted!');
+        }
     }
 
 }

@@ -120,20 +120,22 @@
 
     </div>
     <!-- /.row -->
-
-    <div class="row">
-        <div class="col-md-12">
-            <div style="margin: 60px auto 30px;">
-                <h2 class="text-center" style="font-weight: bolder;">Transaction of last 7 days</h2>
-                <div>
-                    {!! $chart->container() !!}
+    @if (\Auth::user()->role_id != 2)
+        <div class="row">
+            <div class="col-md-12">
+                <div style="margin: 60px auto 30px;">
+                    <h2 class="text-center" style="font-weight: bolder;">Transaction of last 7 days</h2>
+                    <div>
+                        {!! $chart->container() !!}
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js" charset="utf-8"></script>
-    {!! $chart->script() !!}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js" charset="utf-8"></script>
+        {!! $chart->script() !!}
+    @endif
+
 
 @endsection
 

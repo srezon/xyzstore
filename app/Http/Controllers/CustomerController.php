@@ -80,6 +80,9 @@ class CustomerController extends Controller
 
     public function editCustomer($id)
     {
+        if (\Auth::user()->role_id == 2) {
+            return view('panel.user.noAccess');
+        }
         $phoneNumber = $id;
         $customer = Customer::where('phoneNumber', $phoneNumber)->first();
         return view('panel.customer.editCustomer')->with('customer', $customer);
@@ -88,6 +91,9 @@ class CustomerController extends Controller
 
     public function update(Request $request)
     {
+        if (\Auth::user()->role_id == 2) {
+            return view('panel.user.noAccess');
+        }
         $customer = new Customer();
         $customer->find($request->id)->fill($request->all())->save();
         return redirect()->back()->with('msg', 'Customer record updated successfully.');
