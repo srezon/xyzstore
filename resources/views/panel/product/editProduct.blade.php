@@ -10,7 +10,6 @@
                 @else
                     {{$editMsg}}
                 @endif
-
             </h3>
             <hr/>
             <div class="well">
@@ -78,6 +77,15 @@
                     <div class="col-sm-10">
                         <input type="number" class="form-control" value="{{$productByID->productSellingPrice}}" name="productSellingPrice">
                         <span class="text-danger">{{ $errors->has('productSellingPrice') ? $errors->first('productSellingPrice') : '' }}</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="date" class="col-sm-2 control-label">Expiry Date <span
+                                class="text-danger">*</span></label>
+                    <div class="col-sm-2">
+                        <input type="date" class="form-control" name="expiry" value="{{$productByID->expiry}}">
+                        <span class="text-danger">{{ $errors->has('expiry') ? $errors->first('expiry') : '' }}</span>
                     </div>
                 </div>
 

@@ -37,6 +37,7 @@
             <th>Product Selling Price</th>
             <th>Product Notes</th>
             <th>Total Sold</th>
+            <th>Expiry</th>
             <th>Action</th>
         </tr>
         </thead>
@@ -52,7 +53,7 @@
                 <td>TK. {{ $product->productSellingPrice }}</td>
                 <td>{{ $product->productNotes }}</td>
                 <td>{{ $product->productTotalSold }}</td>
-
+                <td>{{ $product->expiry or '--'}}</td>
                 <td>
                     {{--<a href="{{ url('/products/view/'.$product->id) }}" class="btn btn-info" title="Product View">--}}
                     {{--<span class="glyphicon glyphicon-info-sign"></span>--}}

@@ -9,29 +9,26 @@
             <div class="well">
                 {!! Form::open( [ 'url'=>'/brand/save', 'method' =>'POST', 'class' =>'form-horizontal' ] ) !!}
                 <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Brand Name</label>
+                    <label for="inputEmail3" class="col-sm-2 control-label">Brand Name <span class="text-danger">*</span></label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" name="brandName">
+                        <input type="text" class="form-control" name="brandName" required>
                         <span class="text-danger">{{ $errors->has('brandName') ? $errors->first('brandName') : '' }}</span>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputPassword3" class="col-sm-2 control-label">Brand Notes</label>
+                    <label for="inputPassword3" class="col-sm-2 control-label" >Brand Notes <span class="text-danger">*</span></label>
                     <div class="col-sm-10">
-                        <textarea class="form-control" name="brandNotes" rows="8"></textarea>
+                        <textarea class="form-control" name="brandNotes" rows="8" required></textarea>
                         <span class="text-danger">{{ $errors->has('brandNotes') ? $errors->first('brandNotes') : '' }}</span>
                     </div>
                 </div>
-
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" name="btn" class="btn btn-success btn-block">Create Brand</button>
+                        <button type="submit" name="btn" class="btn btn-info btn-block">Create Brand</button>
                     </div>
                 </div>
                 {!! Form::close() !!}
             </div>
         </div>
     </div>
-
-
 @endsection

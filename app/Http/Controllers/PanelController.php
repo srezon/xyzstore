@@ -7,16 +7,24 @@ use App\Customer;
 use App\Product;
 use App\Sale;
 use App\Brand;
-use App\Providers;
+use App\Supplier;
 
-
-use Illuminate\Http\Request;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-
+use App\Charts\PanelChart;
 
 class PanelController extends Controller
 {
-    public function index(){
+    protected $product;
+
+    public function __construct(Product $product, Sale $sale)
+    {
+        $this->product = $product;
+        $this->sale = $sale;
+    }
+
+    public function index()
+    {
         if (Auth::guest()) {
             return view('panel.authentication.login');
         } else {
@@ -25,19 +33,65 @@ class PanelController extends Controller
             $saleCount = Sale::count();
             $brandCount = Brand::count();
             $customerCount = Customer::count();
-            //passing data with array method
-//            return view('panel.home.home', ['categoryCount'=>$categoryCount]);
-            //passing data with with method
-            return view('panel.home.home')
-                ->with('categoryCount', $categoryCount)
-                ->with('productCount', $productCount)
-                ->with('saleCount', $saleCount)
-                ->with('brandCount', $brandCount)
-                ->with('customerCount', $customerCount);
+            $supplierCount = Supplier::count();
+
+            $chart = new PanelChart;
+            $chart->labels($this->getLastSevenDays());
+            $chart->dataset('Buying', 'line', $this->getTransactionData($this->product,'productBuyingPrice', 7))
+                ->backgroundcolor('rgba(5, 127, 37, 0.5)');
+            $chart->dataset('Selling', 'line', $this->getTransactionData($this->sale, 'totalBill', 7))->backgroundcolor
+            ('rgba(186, 9, 9, 0.5)');
+
+            return view('panel.home.home', compact(
+                'categoryCount',
+                'productCount',
+                'saleCount',
+                'brandCount',
+                'customerCount',
+                'supplierCount',
+                'chart'
+            ));
+
         }
-
-//        Sir handled it with middleware https://www.youtube.com/watch?v=0bHy8O9GpFY&t=5939s (16:0)
-
-
     }
+
+    /**
+     * Get the last seven days
+     * only the name of the days
+     * @return array
+     */
+    private function getLastSevenDays()
+    {
+        $days = [];
+        for ($i = 0; $i < 7; $i++) {
+            $days[$i] = Carbon::now()->subDays($i)->format('l (d - F)');
+        }
+        return array_flatten($days);
+    }
+
+    /**
+     * This method will go through the bookings records
+     * sum off the each days amount to total
+     * if no transaction it will take 0 as replacement of null
+     *
+     * @param $days
+     * @return array
+     */
+    private function getTransactionData($model, $key, $days) {
+        //vars
+        $transactions = [];
+        //Loop
+        for ($i=0; $i<$days; $i++) {
+            $transactions[] = $model->whereBetween('created_at', [
+                Carbon::now()->subDays($i)->startOfDay()->toDateTimeString(),
+                Carbon::now()->subDays($i)->endOfDay()->toDateTimeString()
+            ])
+                ->selectRaw('COALESCE(SUM('.$key.'), 0) as total')
+                ->get()
+                ->toArray();
+        }
+        //returns
+        return array_flatten($transactions);
+    }
+
 }

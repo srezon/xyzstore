@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Http\Request;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Auth\Events\Registered;
 
 class RegisterController extends Controller
 {
@@ -22,6 +24,28 @@ class RegisterController extends Controller
 
     use RegistersUsers;
 
+    public function register(Request $request)
+    {
+//        return $request->all();
+        $this->validator($request->all())->validate();
+        $data = [
+            'role_id' => $request->role_id,
+            'name' => $request->name,
+            'email' => $request->email,
+            'contact' => $request->contact,
+            'address' => $request->address,
+            'password' => \Hash::make($request->password)
+        ];
+        User::create($data);
+//        event(new Registered($user = $this->create($data)));
+
+//        $this->guard()->login($user);
+//        dd('sss');
+        return redirect(url('/users'));
+//        dd('ssss');
+//        return $this->registered($request, $user) ?: redirect($this->redirectPath());
+    }
+
     /**
      * Where to redirect users after registration.
      *
@@ -36,13 +60,14 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+//        To enable registration page for logged in user, comment out the following
+//        $this->middleware('guest', ['except' => 'getLogout']);
     }
 
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
@@ -50,7 +75,7 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
-            'contact'=> 'required',
+            'contact' => 'required',
             'password' => 'required|min:6|confirmed',
         ]);
     }
@@ -58,7 +83,7 @@ class RegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return User
      */
     protected function create(array $data)
@@ -66,7 +91,7 @@ class RegisterController extends Controller
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'contact'=> $data['contact'],
+            'contact' => $data['contact'],
             'address' => $data['address'],
             'password' => bcrypt($data['password']),
         ]);

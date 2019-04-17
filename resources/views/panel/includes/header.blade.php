@@ -8,9 +8,7 @@
     <a class="navbar-brand" href="{{url('/panel')}}">XYZ POS System</a>
 </div>
 <!-- /.navbar-header -->
-
 <br>
-
 
 <ul class="nav navbar-top-links navbar-right">
     <li class="dropdown">
