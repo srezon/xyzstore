@@ -1,26 +1,4 @@
-@extends('panel.master')
 
-@section('content')
-
-    <hr>
-
-    @if(($invoiceByCode[0]->delivered) == "Delivered")
-        <div class="col-md-13 text-center">
-            <p>Delivary Starus: {{$invoiceByCode[0]->delivered}}</p></div>
-    @else
-
-        <div class="col-md-13 text-center">
-            <p>Delivary Starus: {{$invoiceByCode[0]->delivered}}</p></div>
-        <div class="col-md-13 text-center"><p><a href="{{ url('/customer/'.$invoiceByCode[0]->phoneNumber) }}"
-                                                 class="btn btn-success"
-                                                 title="Sell Product to Customer">Sell More
-                    <span class="glyphicon glyphicon-shopping-cart"></span>
-                </a></p></div>
-    @endif
-
-
-    <hr>
-    <div id="invoice">
         <style>
 
             .invoice-box {
@@ -175,36 +153,5 @@
                 </tbody>
             </table>
         </div>
-    </div>
-    <div class="div col-md-13 text-center">
-        <label class="checkbox-inline"><input type="checkbox" value="" name="send_email" @if(!isset($invoiceByCode[0]->email)) disabled @endif >Send Email to Customer
-            ({{$invoiceByCode[0]->email}})</label>
-    </div>
-    <hr>
-    <div class="col-md-13 text-center">
-        <a href="#" onclick="printDiv('invoice')" class="btn btn-info btn-lg ">
-            <span class="glyphicon glyphicon-print"></span> Print
-        </a>
-    </div>
 
-    <script type="text/javascript">
 
-        function printDiv(invoice) {
-            if ($("input[name=send_email]").is(':checked')) {
-                var sendEmail = true;
-            } else {
-                var sendEmail = false;
-            }
-            ;
-            // alert(sendEmail);
-            var printContents = document.getElementById(invoice).innerHTML;
-            w = window.open();
-            w.document.write(printContents);
-            w.print();
-            document.location.href = "{{ url('/invoice/makeDelivered/'.$invoiceByCode[0]->invoiceCode).'?sendEmail='
-            }}" + sendEmail;
-            w.close();
-        }
-    </script>
-
-@endsection
