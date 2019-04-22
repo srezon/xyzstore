@@ -40,9 +40,10 @@ class PanelController extends Controller
 
             $chart = new PanelChart;
             $chart->labels($this->getLastSevenDays());
-            $chart->dataset('Buying', 'line', $this->getTransactionData($this->product,'productBuyingPrice', 7))
+            $chart->dataset('Buying', 'line', $this->getTransactionData($this->product, 'productBuyingPrice','productQuantity', 7))
                 ->backgroundcolor('rgba(5, 127, 37, 0.5)');
-            $chart->dataset('Selling', 'line', $this->getTransactionData($this->sale, 'totalBill', 7))->backgroundcolor
+            $chart->dataset('Selling', 'line', $this->getTransactionData($this->sale, 'totalBill',
+                'purchaseQuantity', 7))->backgroundcolor
             ('rgba(186, 9, 9, 0.5)');
 
             return view('panel.home.home', compact(
@@ -80,16 +81,17 @@ class PanelController extends Controller
      * @param $days
      * @return array
      */
-    private function getTransactionData($model, $key, $days) {
+    private function getTransactionData($model, $price, $quantity, $days)
+    {
         //vars
         $transactions = [];
         //Loop
-        for ($i=0; $i<$days; $i++) {
+        for ($i = 0; $i < $days; $i++) {
             $transactions[] = $model->whereBetween('created_at', [
                 Carbon::now()->subDays($i)->startOfDay()->toDateTimeString(),
                 Carbon::now()->subDays($i)->endOfDay()->toDateTimeString()
             ])
-                ->selectRaw('COALESCE(SUM('.$key.'), 0) as total')
+                ->selectRaw('COALESCE(SUM(' . $price . ' * ' . $quantity . '), 0) as total')
                 ->get()
                 ->toArray();
         }
