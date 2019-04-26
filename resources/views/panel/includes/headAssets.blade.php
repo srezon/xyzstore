@@ -1,4 +1,3 @@
-
 <link rel="icon" type="image/ico" href="public/favicon.ico">
 <!-- jQuery -->
 <script src="{{asset('public/panel')}}/vendor/jquery/jquery.min.js"></script>
@@ -56,7 +55,36 @@
 <script src="{{asset('public/panel')}}/vendor/morrisjs/morris.min.js"></script>
 <script src="{{asset('public/panel')}}/data/morris-data.js"></script>
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet"/>
 
 <!-- Custom Theme JavaScript -->
 <script src="{{asset('public/panel')}}/dist/js/sb-admin-2.js"></script>
+
+<style>
+    @media only screen and (min-width: 768px) {
+        .sidebar {
+            min-height: 1200px;
+            background-color: #263238;
+        }
+
+        nav.navbar.navbar-default.navbar-static-top,
+        .nav > li > a:hover {
+            background-color: #263238;
+        }
+
+        .sidebar ul li a.active {
+            background-color: transparent;
+        }
+
+        .sidebar .nav > li > a {
+            color: #fafafa;
+        }
+        .sidebar ul li {
+            border-bottom: none;
+        }
+        .sidebar .nav>li>a i.fa {
+            font-size: 18px;
+            margin-right: 5px;
+        }
+    }
+</style>
