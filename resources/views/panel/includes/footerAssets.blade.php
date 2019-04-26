@@ -1,16 +1,12 @@
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 
 <script>
-    // document.addEventListener('DOMContentLoaded', function() {
-    //     chart1 = Highcharts.stockChart('chart', {
-    //         rangeSelector: {
-    //             selected: 1
-    //         },
-    //         series: [{
-    //             name: 'USD to EUR',
-    //             data: [1,2,3,4,5] // predefined JavaScript array
-    //         }]
-    //     });
-    // });
+    $(document).ready(function () {
+        $('.select2').select2({
+            placeholder: 'Select a Product',
+            allowClear: true,
+        });
+    });
 
 </script>

@@ -161,8 +161,8 @@ class SaleController extends Controller
             $sale->purchaseQuantity = $request->purchaseQuantity;
             $sale->totalBill = $finalPricePerUnit * ($request->purchaseQuantity);
             $sale->discount_percentage_per_unit = $request->discount_percentage_per_unit;
-
             $sale->save();
+
 
             //update product quantity
             $oldProductQuantity = DB::table('products')
@@ -190,6 +190,7 @@ class SaleController extends Controller
             $sale->invoicesInvoiceCode = $request->invoiceCode;//$request->invoiceCode
             $sale->purchaseQuantity = $request->purchaseQuantity;
             $sale->totalBill = $finalPricePerUnit * ($request->purchaseQuantity);
+            $sale->discount_percentage_per_unit = $request->discount_percentage_per_unit;
             $sale->save();
 
             //update product quantity

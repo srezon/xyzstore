@@ -53,21 +53,11 @@
                         <option value="{{$key}}">{{$value}}</option>
                     @endforeach
                 </select>
-                <input type="hidden" value="{{ $customerByPhone->phoneNumber }}" class="form-control"
-                       placeholder="Enter Customer ID to find them..." name="customerPhone" id="srch-term"
-                       type="number">
+                <input type="hidden" value="{{ $customerByPhone->phoneNumber }}" class="form-control" name="customerPhone" id="srch-term">
                 <button class="btn btn-default btn-sm pull-right" type="submit"><i class="glyphicon glyphicon-search"></i></button>
             </div>
             {!! Form::close()!!}
         </div>
     </div>
     <hr>
-    <script>
-        $(document).ready(function () {
-            $('.select2').select2({
-                placeholder: 'Select a Product',
-                allowClear: true,
-            });
-        });
-    </script>
 @endsection

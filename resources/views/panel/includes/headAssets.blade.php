@@ -56,5 +56,7 @@
 <script src="{{asset('public/panel')}}/vendor/morrisjs/morris.min.js"></script>
 <script src="{{asset('public/panel')}}/data/morris-data.js"></script>
 
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+
 <!-- Custom Theme JavaScript -->
 <script src="{{asset('public/panel')}}/dist/js/sb-admin-2.js"></script>

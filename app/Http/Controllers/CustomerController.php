@@ -62,7 +62,7 @@ class CustomerController extends Controller
 
     public function sellToCustomer($id)
     {
-        $customerByPhone = DB::table('customers')
+         $customerByPhone = DB::table('customers')
             ->leftJoin('sales', 'customers.id', '=', 'sales.customerID')
             ->select('customers.id', 'customers.firstName', 'customers.lastName', 'customers.phoneNumber', 'customers.email', 'customers.address', DB::raw('IFNULL(SUM(sales.purchaseQuantity), 0) as totalProductsBought'), DB::raw('IFNULL(SUM(sales.totalBill), 0) as totalPurchasedBDT'))
             ->groupBy('customers.id', 'customers.firstName', 'customers.lastName', 'customers.phoneNumber', 'customers.email', 'customers.address')
@@ -73,6 +73,7 @@ class CustomerController extends Controller
         foreach ($products as $product) {
             $productsArray[$product->id] = $product->id . ' - ' . $product->productName . ' - TK' . $product->productSellingPrice . ' - Quantity: ' . $product->productQuantity;
         }
+//        return $productsArray;
         return view('panel.customer.sellToCustomer')
             ->with('customerByPhone', $customerByPhone)
             ->with('productsArray', $productsArray);
