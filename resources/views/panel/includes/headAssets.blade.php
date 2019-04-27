@@ -21,9 +21,8 @@
 <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.15/css/jquery.dataTables.css">
 <script src="{{asset('public/panel')}}/vendor/jquery/jquery.min.js"></script>
 
-<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.js"></script>
-{{--<link href="{{asset('public/panel')}}/vendor/datatables/media/css/dataTables.bootstrap.min.css" rel="stylesheet">--}}
-{{--<script src="{{asset('public/panel')}}/vendor/datatables/media/js/dataTables.bootstrap.js"></script>--}}
+<script type="text/javascript" charset="utf8" src="{{ asset('public/panel/vendor/datatables/js/jquery.dataTables.js')
+}}"></script>
 
 <!-- Custom Fonts -->
 <link href="{{asset('public/panel')}}/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -33,16 +32,6 @@
 <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
-
-<!-- for Chart.js from http://www.chartjs.org -->
-<!-- detailed CDNs for it: https://cdnjs.com/libraries/Chart.js -->
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
-
-{{--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>--}}
 
 <!-- Bootstrap Core JavaScript -->
 <script src="{{asset('public/panel')}}/vendor/bootstrap/js/bootstrap.min.js"></script>
@@ -55,10 +44,9 @@
 <script src="{{asset('public/panel')}}/vendor/morrisjs/morris.min.js"></script>
 <script src="{{asset('public/panel')}}/data/morris-data.js"></script>
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet"/>
+<link href="{{ asset('public/panel/vendor/select2/select2.min.css') }}" rel="stylesheet"/>
 
-<!-- Custom Theme JavaScript -->
-<script src="{{asset('public/panel')}}/dist/js/sb-admin-2.js"></script>
+
 
 <style>
     @media only screen and (min-width: 768px) {
@@ -68,7 +56,10 @@
         }
 
         nav.navbar.navbar-default.navbar-static-top,
-        .nav > li > a:hover {
+        .nav > li > a:hover,
+        .nav > li > a:active,
+        .nav > li > a:focus
+        {
             background-color: #263238;
         }
 

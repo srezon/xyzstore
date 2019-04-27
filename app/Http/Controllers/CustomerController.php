@@ -29,7 +29,7 @@ class CustomerController extends Controller
     {
 //retrive specific customer of received phone number
         $customerPhone = $request->customerPhone;
-        $customerByPhone = Customer::where('phoneNumber', $customerPhone)->first();
+        $customerByPhone = Customer::where('phoneNumber', 'like', '%'.$customerPhone.'%')->first();
         $customers = DB::table('customers')
             ->leftJoin('sales', 'customers.id', '=', 'sales.customerID')
             ->select('customers.id', 'customers.firstName', 'customers.lastName', 'customers.phoneNumber', 'customers.email', 'customers.address', DB::raw('IFNULL(SUM(sales.purchaseQuantity), 0) as totalProductsBought'), DB::raw('IFNULL(SUM(sales.totalBill), 0) as totalPurchasedBDT'))

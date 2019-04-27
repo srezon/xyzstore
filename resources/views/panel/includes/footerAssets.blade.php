@@ -1,5 +1,10 @@
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+<script src="{{ asset('public/panel/vendor/select2/select2.min.js') }}"></script>
+
+
+<!-- Custom Theme JavaScript -->
+<script src="{{asset('public/panel')}}/dist/js/sb-admin-2.js"></script>
+
 
 <script>
     $(document).ready(function () {

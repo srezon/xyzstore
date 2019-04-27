@@ -106,6 +106,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/sales/lastweek/', 'SaleController@viewLastWeekSales');
     Route::get('/sales/today/', 'SaleController@viewTodaySales');
     Route::get('/sales/yesterday/', 'SaleController@viewYesterdaySales');
+    Route::get('/sales/specific/', 'SaleController@viewSpecificDaySales');
 
 
 

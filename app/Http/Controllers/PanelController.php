@@ -31,6 +31,9 @@ class PanelController extends Controller
             return view('panel.authentication.login');
         } else {
 
+//            if (\Auth::user()->role_id == 2){
+//                return redirect('/customers/');
+//            }
             $categoryCount = Category::count();
             $productCount = Product::count();
             $saleCount = Sale::count();
@@ -41,10 +44,10 @@ class PanelController extends Controller
             $chart = new PanelChart;
             $chart->labels($this->getLastSevenDays());
             $chart->dataset('Buying', 'line', $this->getTransactionData($this->product, 'productBuyingPrice','productQuantity', 7))
-                ->backgroundcolor('rgba(5, 127, 37, 0.5)');
+                ->backgroundcolor('rgba(66, 165, 245, 0.75)');
             $chart->dataset('Selling', 'line', $this->getTransactionData($this->sale, 'totalBill',
                 1, 7))->backgroundcolor
-            ('rgba(186, 9, 9, 0.5)');
+            ('rgba(229, 57, 53, 0.75)');
 
             return view('panel.home.home', compact(
                 'categoryCount',

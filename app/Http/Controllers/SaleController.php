@@ -692,9 +692,9 @@ class SaleController extends Controller
         $totalProfit = $totalSaleCost[0]->totalBill - $totalCost[0]->totalCost;
 
         //finding profit percentage
-        if ($totalCost[0]->totalCost != 0){
+        if ($totalCost[0]->totalCost != 0) {
             $profitPercentage = round(($totalProfit * 100) / $totalCost[0]->totalCost);
-        }else{
+        } else {
             $profitPercentage = 0;
         }
 
@@ -823,6 +823,11 @@ class SaleController extends Controller
             ->with('topCustomersByProductQt', $topCustomersByProductQt)
             ->with('topSellingProducts', $topSellingProducts);
     }
+
+//    public function viewSpecificDaySales()
+//    {
+//        return view('panel.sale.viewYesterdaySales');
+//    }
 
     public function saleDetails()
     {
